@@ -1,0 +1,135 @@
+<% layout('layouts/boilerplate') %>
+
+  <section class="py-5" style="background-color: #f9f9f9;">
+    <div class="container">
+      <!-- Page Header -->
+      <div class="text-center mb-5">
+        <h2 class="fw-bold display-6 gradient-heading mb-3">
+          <i class="fa-solid fa-palette me-2 text-warning"></i>
+          Stunning Decor Services
+        </h2>
+        <p class="text-muted fs-5">Transform your venue with elegance, creativity, and unmatched style ✨</p>
+        <a href="/decors/new" class="btn btn-warning text-dark mt-3 px-4 py-2 fw-semibold rounded-pill shadow-sm">
+          <i class="fa-solid fa-plus me-2"></i>Add New Decor
+        </a>
+      </div>
+
+      <!-- Decor Cards -->
+      <div class="row g-4">
+        <% if (decors && decors.length> 0) { %>
+          <% decors.forEach(decor=> { %>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+              <div class="card decor-card border-0 shadow-lg h-100 bg-white">
+                <div class="position-relative">
+                  <img src="<%= decor.imageUrl || 'https://via.placeholder.com/400x300?text=Decor+Image' %>"
+                    class="card-img-top rounded-top" alt="<%= decor.name %>">
+                  <span class="badge bg-gradient position-absolute top-0 start-0 m-3 px-3 py-2 shadow-sm">
+                    <%= decor.style || 'Decor Service' %>
+                  </span>
+                </div>
+                <div class="card-body d-flex flex-column">
+                  <h5 class="card-title fw-bold text-primary mb-2">
+                    <i class="fa-solid fa-archway me-2"></i>
+                    <%= decor.name %>
+                  </h5>
+                  <p class="card-text text-muted mb-2">
+                    <i class="fa-solid fa-location-dot text-danger me-1"></i>
+                    <%= decor.city || 'Not specified' %>
+                  </p>
+
+                  <p class="mb-2">
+                    <i class="fa-solid fa-sparkles text-warning me-1"></i>
+                    <span class="text-muted">Services Offered:</span>
+                    <%= decor.servicesOffered && decor.servicesOffered.length> 0
+                      ? decor.servicesOffered.join(', ')
+                      : 'General Decoration' %>
+                  </p>
+
+                  <p class="fw-semibold text-success mb-3">
+                    ₹ <%= decor.priceRange?.min || 0 %> - ₹ <%= decor.priceRange?.max || 0 %>
+                  </p>
+
+                  <!-- <div class="mt-auto">
+                    <% if (decor.email) { %>
+                      <a href="mailto:<%= decor.email %>" class="btn btn-outline-primary w-100 mb-2">
+                        <i class="fa-solid fa-envelope me-2"></i> Contact via Email
+                      </a>
+                      <% } %>
+                        <% if (decor.contactNumber) { %>
+                          <a href="tel:<%= decor.contactNumber %>" class="btn btn-warning w-100 text-dark fw-semibold">
+                            <i class="fa-solid fa-phone me-2"></i> Call Now
+                          </a>
+                          <% } %>
+                  </div> -->
+                </div>
+                <div class="card-footer bg-light text-center border-0">
+                  <a href="/decors/<%= decor._id %>" class="btn btn-outline-primary w-100 mt-2">
+                    <i class="fa-solid fa-eye"></i> View Details
+                  </a>
+                </div>
+              </div>
+            </div>
+            <% }) %>
+              <% } else { %>
+                <div class="col-12 text-center py-5">
+                  <p class="text-muted fs-5 mb-3">No decor services available yet 🕯️</p>
+                  <a href="/decors/new" class="btn btn-primary">
+                    <i class="fa-solid fa-plus me-2"></i>Add New Decor
+                  </a>
+                </div>
+                <% } %>
+      </div>
+    </div>
+  </section>
+
+  <!-- Custom Styles -->
+  <style>
+    /* Bright Red Gradient Heading */
+    .gradient-heading {
+      background: linear-gradient(90deg, #ff1a1a, #ff6347, #ff4500);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      letter-spacing: 0.5px;
+    }
+
+    .decor-card {
+      border-radius: 18px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .decor-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .decor-card img {
+      height: 250px;
+      width: 100%;
+      object-fit: cover;
+    }
+
+    .badge.bg-gradient {
+      background: linear-gradient(135deg, #d4af37, #ffcf70);
+      color: #000;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .decor-card .card-body {
+      padding: 1.3rem;
+    }
+
+    @media (max-width: 768px) {
+      .decor-card img {
+        height: 220px;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .decor-card img {
+        height: 200px;
+      }
+    }
+  </style>

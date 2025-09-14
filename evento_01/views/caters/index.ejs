@@ -1,0 +1,134 @@
+<%layout('layouts/boilerplate')%>
+
+
+<!-- Outer container with padding -->
+<div class="container py-4">
+
+  <!-- ====================== HEADER SECTION ====================== -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <!-- Page Title with an Icon -->
+    <h2 class="fw-bold text-primary">
+      <i class="fa-solid fa-utensils me-2"></i>Available Caterers
+    </h2>
+
+    <!-- Button to add a new caterer -->
+    <a href="/caters/new" class="btn btn-success">
+      <i class="fa-solid fa-plus me-2"></i>Add New Caterer
+    </a>
+  </div>
+
+  <!-- ====================== CATERER LIST SECTION ====================== -->
+  <% if (caters && caters.length > 0) { %>
+    <div class="row g-4">
+      <% caters.forEach(cater => { %>
+
+        <div class="col-lg-4 col-md-6 col-sm-12">
+
+          <!-- Individual caterer card -->
+          <div class="card h-100 shadow-sm border-0 rounded-3">
+
+            <!-- IMAGE -->
+            <% if (cater.imageUrl) { %>
+              <img src="<%= cater.imageUrl %>" class="card-img-top" alt="<%= cater.name %>" 
+                   style="height: 220px; object-fit: cover;">
+            <% } else { %>
+              <img src="https://via.placeholder.com/400x220?text=<%= cater.name %>" class="card-img-top" alt="No image">
+            <% } %>
+
+            <!-- CARD BODY -->
+            <div class="card-body d-flex flex-column">
+
+              <!-- Caterer Name -->
+              <h5 class="card-title text-dark fw-semibold mb-1"><%= cater.name %></h5>
+
+              <!-- Cuisine Type -->
+              <% if (cater.cuisineType) { %>
+                <p class="text-muted mb-2">
+                  <i class="fa-solid fa-bowl-food me-1 text-warning"></i>
+                  Cuisine: <%= cater.cuisineType %>
+                </p>
+              <% } %>
+
+              <!-- Specialties -->
+              <% if (cater.specialties && cater.specialties.length > 0) { %>
+                <div class="mb-2">
+                  <strong class="small text-secondary">Specialties:</strong>
+                  <div class="mt-1 d-flex flex-wrap gap-1">
+                    <% cater.specialties.forEach(specialty => { %>
+                      <span class="badge bg-light text-dark border rounded-pill px-2 py-1">
+                        <%= specialty %>
+                      </span>
+                    <% }); %>
+                  </div>
+                </div>
+              <% } %>
+
+              <!-- Price per Plate -->
+              <p class="fw-semibold text-primary mb-2">
+                <i class="fa-solid fa-indian-rupee-sign me-1"></i>
+                <%= cater.pricePerPlate.toLocaleString() %> / plate
+              </p>
+
+              <!-- City -->
+              <% if (cater.city) { %>
+                <p class="small text-muted mb-2">
+                  <i class="fa-solid fa-city me-1 text-info"></i>
+                  <%= cater.city %>
+                </p>
+              <% } %>
+
+              <!-- Contact Info -->
+              <div class="mt-auto">
+                <% if (cater.contactNumber) { %>
+                  <p class="small mb-1">
+                    <i class="fa-solid fa-phone me-1 text-success"></i>
+                    <%= cater.contactNumber %>
+                  </p>
+                <% } %>
+                <% if (cater.email) { %>
+                  <p class="small mb-1">
+                    <i class="fa-solid fa-envelope me-1 text-danger"></i>
+                    <%= cater.email %>
+                  </p>
+                <% } %>
+              </div>
+
+              <!-- ACTION BUTTONS -->
+              <div class="mt-3 d-flex justify-content-between align-items-center pt-2 border-top">
+                <a href="/caterers/<%= cater._id %>" class="btn btn-outline-primary btn-sm">
+                  <i class="fa-solid fa-eye me-1"></i>View
+                </a>
+                <div class="d-flex gap-2">
+                  <a href="/caters/<%= cater._id %>/edit" class="btn btn-outline-warning btn-sm">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                  </a>
+                  <form action="/caters/<%= cater._id %>?_method=DELETE" method="POST" class="d-inline">
+                    <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('Delete this caterer?')">
+                      <i class="fa-solid fa-trash"></i>
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+            <!-- CARD FOOTER -->
+            <div class="card-footer bg-light small text-muted">
+              Added on <%= new Date(cater.createdAt).toLocaleDateString() %>
+            </div>
+
+          </div>
+        </div>
+
+      <% }) %>
+    </div>
+  <% } else { %>
+    <!-- EMPTY STATE -->
+    <div class="text-center py-5">
+      <i class="fa-solid fa-bowl-food fa-3x text-secondary mb-3"></i>
+      <h5 class="text-muted">No caterers available yet.</h5>
+      <a href="/caters/new" class="btn btn-primary mt-3">
+        <i class="fa-solid fa-plus me-1"></i>Add your first caterer
+      </a>
+    </div>
+  <% } %>
+</div>

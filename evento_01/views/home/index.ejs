@@ -1,0 +1,158 @@
+<% layout('layouts/boilerplate') %>
+
+<!-- ====================== HERO SECTION ====================== -->
+<section class="hero text-light text-center py-5 mb-5" 
+         style="background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+                url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1470&q=80') no-repeat center center;
+                background-size: cover;">
+  <div class="container">
+    <h1 class="display-4 fw-bold mb-3" style="font-family: 'Great Vibes', cursive;">Make Every Event Unforgettable</h1>
+    <p class="lead mb-4" style="font-weight: 600;">From stunning venues to exquisite catering and decor — plan and manage your events seamlessly with AI assistance.</p>
+    <a href="/venues" class="btn btn-warning btn-lg me-2"><i class="fa-solid fa-building me-2"></i>Explore Venues</a>
+    <a href="/events/new" class="btn btn-outline-light btn-lg"><i class="fa-solid fa-calendar-plus me-2"></i>Plan Your Event</a>
+  </div>
+</section>
+
+<!-- ====================== FEATURES SECTION ====================== -->
+<section class="container py-5">
+  <h2 class="text-center fw-bold mb-5" style="font-family: 'Dancing Script', cursive; font-weight: 700;">Our Services</h2>
+  <div class="row g-4 text-center">
+
+    <div class="col-md-3">
+      <div class="card p-4 shadow-sm border-0 h-100 feature-card">
+        <div class="feature-icon bg-gradient text-white mb-3" 
+             style="background: linear-gradient(135deg, #6a11cb, #2575fc); border-radius:50%; width:70px; height:70px; display:flex; align-items:center; justify-content:center; margin:0 auto;">
+          <i class="fa-solid fa-building fa-2x"></i>
+        </div>
+        <h5 class="fw-bold mb-2" style="font-family: 'Dancing Script', cursive;">Venues</h5>
+        <p>Hand-picked locations for weddings, parties, and corporate events.</p>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card p-4 shadow-sm border-0 h-100 feature-card">
+        <div class="feature-icon bg-gradient text-white mb-3" 
+             style="background: linear-gradient(135deg, #ff416c, #ff4b2b); border-radius:50%; width:70px; height:70px; display:flex; align-items:center; justify-content:center; margin:0 auto;">
+          <i class="fa-solid fa-utensils fa-2x"></i>
+        </div>
+        <h5 class="fw-bold mb-2" style="font-family: 'Dancing Script', cursive;">Cuisine</h5>
+        <p>Delicious catering options to delight every guest.</p>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card p-4 shadow-sm border-0 h-100 feature-card">
+        <div class="feature-icon bg-gradient text-white mb-3" 
+             style="background: linear-gradient(135deg, #00c6ff, #0072ff); border-radius:50%; width:70px; height:70px; display:flex; align-items:center; justify-content:center; margin:0 auto;">
+          <i class="fa-solid fa-camera-retro fa-2x"></i>
+        </div>
+        <h5 class="fw-bold mb-2" style="font-family: 'Dancing Script', cursive;">Photography</h5>
+        <p>Professional photographers to capture every precious moment.</p>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card p-4 shadow-sm border-0 h-100 feature-card">
+        <div class="feature-icon bg-gradient text-white mb-3" 
+             style="background: linear-gradient(135deg, #f7971e, #ffd200); border-radius:50%; width:70px; height:70px; display:flex; align-items:center; justify-content:center; margin:0 auto;">
+          <i class="fa-solid fa-gem fa-2x"></i>
+        </div>
+        <h5 class="fw-bold mb-2" style="font-family: 'Dancing Script', cursive;">Decors</h5>
+        <p>Beautiful decor to transform your event into a dream setting.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ====================== CTA SECTION ====================== -->
+<section class="bg-light py-5 text-center">
+  <div class="container">
+    <h2 class="fw-bold mb-3" style="font-family: 'Dancing Script', cursive;">Ready to Plan Your Event?</h2>
+    <p class="mb-4 text-muted">Join hundreds of users who are creating unforgettable experiences effortlessly.</p>
+    <a href="/events/new" class="btn btn-primary btn-lg me-2"><i class="fa-solid fa-calendar-plus me-2"></i>Plan Event Now</a>
+    <a href="/venues" class="btn btn-outline-primary btn-lg"><i class="fa-solid fa-building me-2"></i>Browse Venues</a>
+  </div>
+</section>
+
+<!-- ====================== STATS SECTION ====================== -->
+<section class="container py-5">
+  <div class="row text-center g-4">
+    <div class="col-md-3">
+      <h3 class="fw-bold text-primary">500+</h3>
+      <p class="text-muted">Venues Listed</p>
+    </div>
+    <div class="col-md-3">
+      <h3 class="fw-bold text-success">1000+</h3>
+      <p class="text-muted">Events Planned</p>
+    </div>
+    <div class="col-md-3">
+      <h3 class="fw-bold text-warning">300+</h3>
+      <p class="text-muted">Happy Clients</p>
+    </div>
+    <div class="col-md-3">
+      <h3 class="fw-bold text-danger">50+</h3>
+      <p class="text-muted">Professional Partners</p>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== CUSTOM FONTS ====================== -->
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Great+Vibes&display=swap" rel="stylesheet">
+
+<!-- ====================== CUSTOM NAVBAR STYLES ====================== -->
+<style>
+  /* Navbar gradient */
+  nav.navbar {
+    background: linear-gradient(90deg, #6a11cb, #ff416c);
+  }
+
+  /* Navbar links hover effect */
+  .navbar-nav .nav-link {
+    transition: all 0.3s ease;
+    position: relative;
+    color: #fff !important;
+    font-weight: 600;
+  }
+
+  .navbar-nav .nav-link:hover {
+    transform: scale(1.05);
+    color: #ffe066 !important; /* bright yellow on hover */
+  }
+
+  /* Active link underline */
+  .navbar-nav .active-link::after {
+    content: '';
+    display: block;
+    margin: 4px auto 0;
+    height: 3px;
+    width: 40%;
+    background-color: #ffe066;
+    border-radius: 2px;
+  }
+
+  /* Navbar dropdown styling */
+  .navbar-nav .dropdown-menu {
+    background: linear-gradient(180deg, #6a11cb, #ff416c);
+    border: none;
+  }
+
+  .navbar-nav .dropdown-item {
+    color: #fff;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+
+  .navbar-nav .dropdown-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: scale(1.05);
+  }
+
+  /* Smooth button hover */
+  .btn-outline-warning:hover {
+    background-color: #ffe066;
+    color: #6a11cb;
+    border-color: #ffe066;
+    transition: all 0.3s ease;
+  }
+</style>

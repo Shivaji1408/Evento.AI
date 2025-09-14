@@ -1,0 +1,136 @@
+<% layout('layouts/boilerplate') %>
+
+<section class="py-5" style="background-color: #000;">
+  <div class="container">
+    <!-- Page Header -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-5">
+      <h2 class="fw-bold display-6 gradient-heading mb-3 mb-md-0">
+        <i class="fa-solid fa-users me-2 text-warning"></i>
+        My Guests
+      </h2>
+      <div class="d-flex gap-2">
+        <a href="/guests/new" class="btn btn-warning text-dark fw-semibold">
+          <i class="fa-solid fa-plus me-2"></i>Add Guest
+        </a>
+        <% if (guests && guests.length > 0) { %>
+          <a href="/guests/invite" id="sendAllWhatsapp" class="btn btn-success fw-semibold">
+            <i class="fa-brands fa-whatsapp me-2"></i>Send Bulk Invites
+          </a>
+        <% } %>
+      </div>
+    </div>
+
+    <!-- Compact Guest Cards -->
+    <div class="row g-3">
+      <% if (guests && guests.length > 0) { %>
+        <% guests.forEach(guest => { %>
+          <div class="col-12">
+            <div class="card guest-card border-0 shadow-sm d-flex flex-row align-items-center bg-dark text-light p-3">
+              
+              <!-- Avatar -->
+              <img src="<%= guest.profilePic %>" 
+                   alt="<%= guest.name %>" 
+                   class="guest-avatar me-3">
+
+              <!-- Guest Info -->
+              <div class="flex-grow-1">
+                <h5 class="mb-1 text-warning fw-bold"><%= guest.name %></h5>
+                <p class="mb-1"><i class="fa-solid fa-phone text-success me-2"></i><%= guest.phoneNumber %></p>
+                <% if (guest.email) { %>
+                  <p class="mb-1"><i class="fa-solid fa-envelope text-primary me-2"></i><%= guest.email %></p>
+                <% } %>
+                <% if (guest.address) { %>
+                  <p class="mb-1"><i class="fa-solid fa-location-dot text-info me-2"></i><%= guest.address %></p>
+                <% } %>
+                <p class="mb-0"><i class="fa-solid fa-check-circle text-light me-2"></i> RSVP: <%= guest.rsvp %></p>
+              </div>
+
+              <!-- Right Column: Actions & Circle -->
+              <div class="d-flex flex-column align-items-end ms-3 gap-2">
+                <!-- Circle Badge -->
+                <span class="circle-badge px-2 py-1 text-center"><%= guest.circle %></span>
+
+                <!-- Invite Button -->
+                <a href="https://wa.me/<%= guest.phoneNumber %>?text=You%20are%20invited%20to%20our%20event%20🎉" 
+                   target="_blank" class="btn btn-success btn-sm fw-semibold w-100">
+                  <i class="fa-brands fa-whatsapp me-1"></i>Invite
+                </a>
+
+                <!-- Delete Button -->
+                <form action="/guests/<%= guest._id %>/delete" method="POST" class="w-100">
+                  <button type="submit" class="btn btn-danger btn-sm fw-semibold w-100">Delete</button>
+                </form>
+              </div>
+
+            </div>
+          </div>
+        <% }) %>
+      <% } else { %>
+        <div class="col-12 text-center py-5">
+          <p class="text-light fs-5 mb-3">No guests added yet 🕯️</p>
+          <a href="/guests/new" class="btn btn-warning text-dark fw-semibold">
+            <i class="fa-solid fa-plus me-2"></i>Add New Guest
+          </a>
+        </div>
+      <% } %>
+    </div>
+  </div>
+</section>
+
+<style>
+  .gradient-heading {
+    background: linear-gradient(90deg, #ff1a1a, #ff6347, #ff4500);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  }
+
+  .guest-card {
+    border-radius: 12px;
+    transition: all 0.2s ease;
+  }
+
+  .guest-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(255, 215, 0, 0.3);
+  }
+
+  .guest-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ffc107;
+  }
+
+  .circle-badge {
+    background: linear-gradient(135deg, #ff1a1a, #ff6347);
+    color: #fff;
+    font-size: 0.75rem;
+    border-radius: 15px;
+    font-weight: 500;
+    text-align: center;
+    min-width: 80px;
+  }
+
+  @media (max-width: 576px) {
+    .guest-card {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .guest-avatar {
+      margin-bottom: 0.75rem;
+    }
+    .d-flex.flex-column.align-items-end.ms-3 {
+      flex-direction: row;
+      gap: 0.5rem;
+      width: 100%;
+      margin-top: 0.5rem;
+    }
+    .circle-badge {
+      min-width: auto;
+      padding: 2px 8px;
+      font-size: 0.7rem;
+    }
+  }
+</style>
