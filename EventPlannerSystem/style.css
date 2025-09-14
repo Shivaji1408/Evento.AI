@@ -1,4 +1,4 @@
-/* ========== RESET ========== */
+
 * {
   margin: 0;
   padding: 0;
@@ -6,7 +6,7 @@
   font-family: "Poppins", sans-serif;
 }
 
-/* ========== BODY ========== */
+
 body {
   background: #f6f8fa;
   color: #222;
@@ -15,7 +15,6 @@ body {
   min-height: 100vh;
 }
 
-/* ========== HEADER ========== */
 header {
   background: #1e3a8a;
   color: #fff;
@@ -33,7 +32,6 @@ header p {
   opacity: 0.9;
 }
 
-/* ========== MAIN LAYOUT ========== */
 .container {
   flex: 1;
   display: flex;
@@ -44,7 +42,7 @@ header p {
   flex-wrap: wrap;
 }
 
-/* ========== FORM & OUTPUT ========== */
+
 .form-container,
 .output-container {
   background: #fff;
@@ -61,7 +59,6 @@ header p {
   overflow-y: auto;
 }
 
-/* ========== FORM ELEMENTS ========== */
 form {
   display: flex;
   flex-direction: column;
@@ -92,7 +89,6 @@ button:hover {
   background: #334cbf;
 }
 
-/* ========== OUTPUT BOX ========== */
 #outputBox {
   background: #f9fafc;
   border: 1px solid #cbd5e1;
@@ -118,7 +114,7 @@ button:hover {
   margin-left: 1.2rem;
 }
 
-/* ========== DOWNLOAD BUTTON ========== */
+
 #downloadPDF {
   background: #1e3a8a;
   color: white;
@@ -134,7 +130,6 @@ button:hover {
   background: #3b82f6;
 }
 
-/* Sticky Download Button for long outputs */
 .output-container {
   position: relative;
 }
@@ -143,11 +138,3 @@ button:hover {
   bottom: 10px;
 }
 
-/* ========== FOOTER ========== */
-footer {
-  background: #1e3a8a;
-  color: white;
-  text-align: center;
-  padding: 1rem;
-  font-size: 0.9rem;
-}
