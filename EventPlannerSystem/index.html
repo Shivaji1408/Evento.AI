@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Agentic AI Event Planner</title>
   <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 
 <body>
@@ -18,7 +19,7 @@
       <h2>Enter Event Details</h2>
       <form id="eventForm">
         <label>Event Name</label>
-        <input type="text" id="eventName" placeholder="Enter Your Event" required />
+        <input type="text" id="eventName" placeholder="e.g. TechFest 2025" required />
 
         <label>Event Date</label>
         <input type="date" id="eventDate" required />
@@ -38,7 +39,6 @@
         <button type="submit">Generate Plan</button>
       </form>
     </section>
-
 
     <section class="output-container">
       <h2>AI-Generated Plan</h2>

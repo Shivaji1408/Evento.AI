@@ -1,11 +1,9 @@
-
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
 }
-
 
 body {
   background: #f6f8fa;
@@ -14,6 +12,7 @@ body {
   flex-direction: column;
   min-height: 100vh;
 }
+
 
 header {
   background: #1e3a8a;
@@ -31,6 +30,7 @@ header p {
   font-size: 1rem;
   opacity: 0.9;
 }
+
 
 .container {
   flex: 1;
@@ -58,6 +58,7 @@ header p {
   max-height: 80vh;
   overflow-y: auto;
 }
+
 
 form {
   display: flex;
@@ -88,6 +89,7 @@ button {
 button:hover {
   background: #334cbf;
 }
+
 
 #outputBox {
   background: #f9fafc;
@@ -130,6 +132,7 @@ button:hover {
   background: #3b82f6;
 }
 
+
 .output-container {
   position: relative;
 }
@@ -137,4 +140,3 @@ button:hover {
   position: sticky;
   bottom: 10px;
 }
-
