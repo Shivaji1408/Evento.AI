@@ -8,17 +8,14 @@ dotenv.config();
 const app = express();
 const port = 3000;
 
-// ✅ Middleware
 app.use(cors());
 app.use(express.json());
 app.use(express.static("public"));
 
-// ✅ OpenAI Client
 const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-// ✅ API Route
 app.post("/generate", async (req, res) => {
   try {
     const { prompt } = req.body;
@@ -30,7 +27,7 @@ app.post("/generate", async (req, res) => {
     console.log("🟢 Received prompt:", prompt);
 
     const completion = await client.chat.completions.create({
-      model: "gpt-4o-mini", // ✅ works for all accounts
+      model: "gpt-4o-mini",
       messages: [
         { role: "system", content: "You are a helpful assistant that generates creative messages." },
         { role: "user", content: prompt },
@@ -47,7 +44,6 @@ app.post("/generate", async (req, res) => {
   }
 });
 
-// ✅ Start Server
 app.listen(port, () => {
   console.log(`🚀 Server running at http://localhost:${port}`);
 });
