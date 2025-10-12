@@ -1,0 +1,82 @@
+<% layout('layouts/boilerplate') %>
+
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+  <div class="container-fluid py-5 bg-light min-vh-100">
+
+    <!-- Header -->
+    <div class="px-5 py-5 bg-dark text-white text-center">
+      <h1 class="mb-3" style="font-family:'Playfair Display',serif; font-size:3rem;">
+        <i class="fa-solid fa-utensils me-3 text-warning"></i>
+        <%= cater.name %>
+      </h1>
+      <p class="opacity-75 fs-5">Delightful Catering Experience for Your Events</p>
+    </div>
+
+    <div class="row g-0 mt-4 px-4">
+
+      <!-- Left Content -->
+      <div class="col-lg-8 col-md-7 p-4">
+
+        <% if (cater.imageUrl) { %>
+          <img src="<%= cater.imageUrl %>" class="w-100 rounded-3 shadow mb-4" style="height:450px; object-fit:cover;">
+          <% } else { %>
+            <img src="https://via.placeholder.com/1200x500?text=No+Image+Available" class="w-100 rounded-3 shadow mb-4">
+            <% } %>
+
+              <!-- Cuisine -->
+              <p class="text-muted fs-5 mb-2"><i class="fa-solid fa-plate-wheat text-warning me-2"></i>
+                Cuisine Type: <strong>
+                  <%= cater.cuisineType %>
+                </strong>
+              </p>
+
+              <!-- Price -->
+              <p class="fw-semibold text-success fs-4 mb-2">
+                ₹ <%= cater.pricePerPlate %> / Plate
+              </p>
+
+              <!-- Specialties -->
+              <% if (cater.specialties && cater.specialties.length> 0) { %>
+                <h5 class="fw-bold text-dark mt-4 mb-2">Specialties</h5>
+                <div class="d-flex flex-wrap gap-2 mb-2">
+                  <% cater.specialties.forEach(spec=> { %>
+                    <span class="badge bg-light text-dark border px-3 py-2 rounded-pill shadow-sm">
+                      <%= spec %>
+                    </span>
+                    <% }) %>
+                </div>
+                <% } %>
+
+                  <!-- Contact -->
+                  <p class="text-muted fs-6 mt-3">
+                    <i class="fa-solid fa-phone text-success me-2"></i>
+                    <%= cater.contactNumber %><br>
+                      <i class="fa-solid fa-envelope text-primary me-2 mt-1"></i>
+                      <%= cater.email %>
+                  </p>
+
+                  <p class="small text-muted mt-3">
+                    <i class="fa-solid fa-calendar-days me-1"></i>
+                    Added on: <%= new Date(cater.createdAt).toLocaleDateString() %>
+                  </p>
+
+                  <a href="/caterers" class="btn btn-outline-secondary px-4 mt-3">
+                    <i class="fa-solid fa-arrow-left me-2"></i>Back
+                  </a>
+      </div>
+
+      <!-- Right Booking -->
+      <div class="col-lg-4 col-md-5 bg-white p-5 border-start shadow-sm">
+        <div class="sticky-top" style="top:5rem;">
+          <h4 class="fw-bold mb-3 text-dark text-center">Book Catering</h4>
+
+          <form action="/caterers/<%= cater._id %>/book" method="POST">
+            <button class="btn btn-success w-100 mt-3">Book This Caterer</button>
+          </form>
+
+        </div>
+      </div>
+
+    </div>
+  </div>

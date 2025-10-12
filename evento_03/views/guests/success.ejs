@@ -1,0 +1,16 @@
+<% layout('layouts/boilerplate') %>
+
+<section class="py-5 text-center" style="background-color: #000;">
+  <div class="container text-light">
+    <h2 class="fw-bold text-success mb-3">
+      <i class="fa-solid fa-circle-check me-2"></i>Invites Sent Successfully!
+    </h2>
+    <p class="mb-4">Your message was sent to <strong><%= count %></strong> guests 🎉</p>
+    <div class="bg-dark p-3 rounded border border-success mb-4">
+      <p class="text-light"><%= message %></p>
+    </div>
+    <a href="/guests" class="btn btn-warning text-dark fw-semibold">
+      <i class="fa-solid fa-users me-2"></i>Back to Guests
+    </a>
+  </div>
+</section>
