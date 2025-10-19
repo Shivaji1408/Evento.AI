@@ -1,0 +1,110 @@
+<% layout('layouts/boilerplate') %>
+
+<div class="container py-4">
+
+  <!-- ====================== HEADER SECTION ====================== -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold text-primary">
+      <i class="fa-solid fa-location-dot me-2"></i>Explore Venues
+    </h2>
+
+    <a href="/venues/new" class="btn btn-success shadow-sm">
+      <i class="fa-solid fa-plus me-2"></i>Add New Venue
+    </a>
+  </div>
+
+  <!-- ====================== VENUE LIST SECTION ====================== -->
+  <% if (venues && venues.length > 0) { %>
+    <div class="row g-4">
+
+      <% venues.forEach(venue => { %>
+        <div class="col-lg-4 col-md-6 col-sm-12">
+          <div class="card h-100 shadow-sm border-0 rounded-3 hover-zoom">
+
+            <!-- Venue Image -->
+            <% if (venue.imageUrl) { %>
+              <img src="<%= venue.imageUrl %>" class="card-img-top" alt="<%= venue.name %>"
+                   style="height: 220px; object-fit: cover; border-top-left-radius: 8px; border-top-right-radius: 8px;">
+            <% } else { %>
+              <img src="https://via.placeholder.com/400x220?text=No+Image" class="card-img-top" alt="No image">
+            <% } %>
+
+            <div class="card-body d-flex flex-column">
+              <!-- Name -->
+              <h5 class="card-title text-dark fw-semibold mb-1"><%= venue.name %></h5>
+
+              <!-- Location -->
+              <p class="text-muted mb-2">
+                <i class="fa-solid fa-location-dot me-1 text-danger"></i>
+                <%= venue.address %>, <%= venue.city %>
+                <% if (venue.state) { %> (<%= venue.state %>) <% } %>
+              </p>
+
+              <!-- Capacity -->
+              <p class="small text-muted mb-2">
+                <i class="fa-solid fa-people-group me-1 text-success"></i>
+                Capacity: <%= venue.capacity %> people
+              </p>
+
+              <!-- Price -->
+              <% if (venue.pricePerDay) { %>
+                <p class="fw-semibold text-primary mb-2">
+                  <i class="fa-solid fa-indian-rupee-sign me-1"></i>
+                  <%= venue.pricePerDay.toLocaleString() %> / day
+                </p>
+              <% } %>
+
+              <!-- Amenities -->
+              <% if (venue.amenities && venue.amenities.length > 0) { %>
+                <div class="mb-2">
+                  <strong class="small text-secondary">Amenities:</strong>
+                  <div class="mt-1 d-flex flex-wrap gap-1">
+                    <% venue.amenities.forEach(amenity => { %>
+                      <span class="badge bg-light text-dark border rounded-pill px-2 py-1">
+                        <%= amenity %>
+                      </span>
+                    <% }) %>
+                  </div>
+                </div>
+              <% } %>
+
+              <!-- Buttons -->
+              <div class="mt-auto d-flex justify-content-between align-items-center pt-3 border-top">
+                <a href="/venues/<%= venue._id %>" class="btn btn-outline-primary btn-sm">
+                  <i class="fa-solid fa-eye me-1"></i>View Details
+                </a>
+
+                <div class="d-flex gap-2">
+                  <a href="/venues/<%= venue._id %>/edit" class="btn btn-outline-warning btn-sm">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                  </a>
+
+                  <form action="/venues/<%= venue._id %>?_method=DELETE" method="POST" class="d-inline">
+                    <button type="submit" class="btn btn-outline-danger btn-sm"
+                            onclick="return confirm('Delete this venue?')">
+                      <i class="fa-solid fa-trash"></i>
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+            <div class="card-footer bg-light small text-muted">
+              Added on <%= new Date(venue.createdAt).toLocaleDateString() %>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+
+  <% } else { %>
+    <!-- Empty State -->
+    <div class="text-center py-5">
+      <i class="fa-solid fa-city fa-3x text-secondary mb-3"></i>
+      <h5 class="text-muted">No venues available yet.</h5>
+      <a href="/venues/new" class="btn btn-primary mt-3">
+        <i class="fa-solid fa-plus me-1"></i>Add your first venue
+      </a>
+    </div>
+  <% } %>
+</div>

@@ -1,0 +1,129 @@
+<% layout('layouts/boilerplate') %>
+
+<section class="py-5" style="background-color: #000;">
+  <div class="container">
+
+    <!-- Invitation Message Box -->
+    <div class="bg-dark p-4 rounded shadow-lg mb-5">
+      <h2 class="fw-bold display-6 text-warning mb-3">
+        <i class="fa-brands fa-whatsapp text-success me-2"></i>Send Bulk Invites
+      </h2>
+      <p class="mb-4" style="color: #ccc;">Write your invitation message and send it to all guests 📱</p>
+      <form id="inviteForm" class="d-flex flex-column flex-md-row gap-3 align-items-stretch">
+        <textarea id="message" rows="4" class="form-control bg-black text-light border-secondary flex-grow-1"
+                  placeholder="Write your invitation message here..." required></textarea>
+        <button type="submit" class="btn btn-success fw-semibold px-4">
+          <i class="fa-brands fa-whatsapp me-2"></i>Send to All Guests
+        </button>
+      </form>
+    </div>
+
+    <!-- Guest List -->
+    <div class="guest-list">
+      <% if (guests && guests.length > 0) { %>
+        <% guests.forEach(guest => { %>
+          <div class="guest-card bg-dark text-light rounded shadow-sm mb-3 d-flex align-items-center p-3">
+            <img src="<%= guest.profilePic || 'https://via.placeholder.com/100?text=Guest' %>" 
+                 class="guest-img rounded-circle me-3" alt="<%= guest.name %>">
+            <div class="flex-grow-1">
+              <h6 class="fw-bold text-warning mb-1"><i class="fa-solid fa-user me-1"></i><%= guest.name %></h6>
+              <div class="d-flex flex-wrap gap-3 text-light small">
+                <span><i class="fa-solid fa-phone me-1 text-success"></i><%= guest.phoneNumber %></span>
+                <% if(guest.email){ %>
+                  <span><i class="fa-solid fa-envelope me-1 text-primary"></i><%= guest.email %></span>
+                <% } %>
+                <% if(guest.address){ %>
+                  <span><i class="fa-solid fa-location-dot me-1 text-info"></i><%= guest.address %></span>
+                <% } %>
+                <span class="badge circle-badge"><%= guest.circle %></span>
+                <span class="badge bg-secondary">RSVP: <%= guest.rsvp %></span>
+              </div>
+            </div>
+            <a href="https://wa.me/<%= guest.phoneNumber.startsWith('+91') ? guest.phoneNumber : '+91'+guest.phoneNumber %>?text=You're%20invited%20to%20our%20event!" 
+               target="_blank" class="btn btn-success btn-sm ms-3">
+              <i class="fa-brands fa-whatsapp me-1"></i>Invite
+            </a>
+          </div>
+        <% }) %>
+      <% } else { %>
+        <p class="text-center text-muted fs-5">No guests found.</p>
+      <% } %>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  const guests = <%- JSON.stringify(guests) %>;
+
+  document.getElementById('inviteForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const message = document.getElementById('message').value.trim();
+    if (!message) return alert('Please enter a message first!');
+
+    alert(`Opening WhatsApp chats for ${guests.length} guests. Press "Send" in each chat.`);
+
+    const encodedMsg = encodeURIComponent(message);
+
+    guests.forEach((g, index) => {
+      const number = g.phoneNumber.startsWith('+91') ? g.phoneNumber : `+91${g.phoneNumber}`;
+      const url = `https://wa.me/${number}?text=${encodedMsg}`;
+      setTimeout(() => {
+        window.open(url, '_blank');
+      }, index * 1000);
+    });
+  });
+</script>
+
+<style>
+  /* Gradient heading for message box */
+  h2.text-warning {
+    background: linear-gradient(90deg, #25D366, #128C7E);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Guest Card Styling */
+  .guest-card {
+    transition: all 0.3s ease;
+  }
+  .guest-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5);
+  }
+
+  .guest-img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+  }
+
+  .circle-badge {
+    background: linear-gradient(135deg, #ff1a1a, #ff6347);
+    color: #fff;
+    font-size: 0.75rem;
+    border-radius: 12px;
+    padding: 3px 8px;
+  }
+
+  textarea.form-control {
+  resize: none;
+  color: #fff; /* Text color white */
+}
+
+textarea::placeholder {
+  color: #ccc; /* Light gray for placeholder */
+}
+
+
+  @media(max-width:768px){
+    .guest-card {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .guest-card .btn {
+      width: 100%;
+      margin-top: 8px;
+    }
+  }
+</style>

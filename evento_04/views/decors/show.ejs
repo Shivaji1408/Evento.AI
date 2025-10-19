@@ -1,0 +1,133 @@
+<% layout('layouts/boilerplate') %>
+
+<!-- Premium Font -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<div class="container-fluid py-5 bg-light min-vh-100">
+
+  <!-- Header -->
+  <div class="px-5 py-5 bg-dark text-white text-center shadow-sm">
+    <h1 class="mb-3"
+      style="font-family: 'Playfair Display', serif; font-weight: 700; font-size: 3rem; letter-spacing: 1px;">
+      <i class="fa-solid fa-wand-magic-sparkles text-warning me-3"></i>
+      <%= decor.name %>
+    </h1>
+    <p class="mb-0 text-light opacity-75 fs-5">
+      Explore decor details and transform your event with elegance.
+    </p>
+  </div>
+
+  <!-- Content -->
+  <div class="row g-0 mt-4 px-4">
+
+    <!-- Left -->
+    <div class="col-lg-8 col-md-7 p-4">
+
+      <!-- Image -->
+      <div class="mb-4">
+        <% if (decor.imageUrl) { %>
+          <img src="<%= decor.imageUrl %>" alt="<%= decor.name %>" class="w-100 rounded-3 shadow"
+            style="height: 500px; object-fit: cover;">
+        <% } else { %>
+          <img src="https://via.placeholder.com/1200x500?text=No+Image+Available" alt="No image"
+            class="w-100 rounded-3 shadow">
+        <% } %>
+      </div>
+
+      <!-- Details -->
+      <p class="text-muted mb-3 fs-5">
+        <i class="fa-solid fa-location-dot text-danger me-2"></i>
+        <%= decor.city %> <% if (decor.state) { %>(<%= decor.state %>)<% } %>
+      </p>
+
+      <p class="text-muted fs-6 mb-2">
+        <i class="fa-solid fa-palette text-primary me-2"></i>
+        Style: <strong><%= decor.style %></strong>
+      </p>
+
+      <p class="text-muted fs-6 mb-2">
+        <i class="fa-solid fa-briefcase text-warning me-2"></i>
+        Services Offered:
+        <strong>
+          <%= decor.servicesOffered && decor.servicesOffered.length > 0 
+              ? decor.servicesOffered.join(', ') 
+              : 'Not specified' %>
+        </strong>
+      </p>
+
+      <p class="fw-semibold text-success fs-5 mb-3">
+        <i class="fa-solid fa-indian-rupee-sign me-1"></i>
+        <%= decor.priceRange && decor.priceRange.min ? decor.priceRange.min : 0 %> -
+        <%= decor.priceRange && decor.priceRange.max ? decor.priceRange.max : 0 %>
+      </p>
+
+      <!-- Contact -->
+      <div class="mb-4">
+        <% if (decor.contactNumber) { %>
+          <p class="mb-1 text-muted fs-6">
+            <i class="fa-solid fa-phone text-success me-2"></i>
+            <%= decor.contactNumber %>
+          </p>
+        <% } %>
+
+        <% if (decor.email) { %>
+          <p class="mb-1 text-muted fs-6">
+            <i class="fa-solid fa-envelope text-primary me-2"></i>
+            <%= decor.email %>
+          </p>
+        <% } %>
+      </div>
+
+      <p class="small text-muted mt-4">
+        <i class="fa-solid fa-calendar-days me-1"></i>
+        Added on: <%= new Date(decor.createdAt).toLocaleDateString() %>
+      </p>
+
+      <!-- Back -->
+      <div class="mt-4">
+        <a href="/decors" class="btn btn-outline-secondary px-4">
+          <i class="fa-solid fa-arrow-left me-2"></i>Back
+        </a>
+      </div>
+
+    </div>
+
+    <!-- Right Sticky -->
+    <div class="col-lg-4 col-md-5 bg-white border-start p-5 shadow-sm">
+      <div class="sticky-top" style="top: 5rem;">
+
+        <!-- Rating -->
+        <div class="text-center mb-5">
+          <h4 class="fw-bold text-dark mb-2">Customer Rating</h4>
+          <div class="text-warning fs-3 mb-2">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star-half-stroke"></i>
+            <i class="fa-regular fa-star"></i>
+          </div>
+          <p class="text-muted small">4.3 / 5 (Based on 36 reviews)</p>
+        </div>
+
+        <!-- Book -->
+        <form action="/decors/<%= decor._id %>/book" method="POST">
+          <button class="btn btn-success btn-lg px-5 shadow w-100">
+            <i class="fa-solid fa-calendar-check me-2"></i>Book This Decor
+          </button>
+        </form>
+
+        <!-- Why -->
+        <div class="mt-4">
+          <h5 class="fw-bold text-dark mb-3">Why Choose This Decor?</h5>
+          <ul class="list-unstyled text-muted small">
+            <li><i class="fa-solid fa-circle-check text-success me-2"></i>Creative & modern themes</li>
+            <li><i class="fa-solid fa-circle-check text-success me-2"></i>High-quality décor materials</li>
+            <li><i class="fa-solid fa-circle-check text-success me-2"></i>Perfect for weddings & luxury events</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>

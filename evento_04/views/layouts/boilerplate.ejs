@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Evento.AI | Plan Your Event Today</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <script src="https://kit.fontawesome.com/e9def8d5db.js" crossorigin="anonymous"></script>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/css/style.css">
+
+  <style>
+    body { font-family: 'Poppins', sans-serif; }
+
+    /* Budget Sidebar */
+    #budgetSidebar {
+      height: 100vh;
+      width: 0;
+      position: fixed;
+      top: 0; right: 0;
+      background: #fff;
+      box-shadow: -3px 0 12px rgba(0,0,0,0.18);
+      overflow-y: auto;
+      transition: all 0.3s ease;
+      z-index: 2000;
+      padding: 0;
+    }
+
+    #budgetSidebar.open {
+      width: 350px;
+      padding: 20px;
+    }
+
+    .budget-close-btn {
+      border: none;
+      background: transparent;
+      font-size: 22px;
+      float: right;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm sticky-top">
+    <div class="container">
+
+      <!-- Brand -->
+      <a class="navbar-brand fw-bold text-light fs-4" href="/">
+        <i class="fa-solid fa-calendar-check text-warning"></i> Evento.<span class="text-primary">AI</span>
+      </a>
+
+      <!-- Budget (Mobile) -->
+      <button class="btn text-light d-lg-none me-2" onclick="openBudget()">
+        <i class="fa-solid fa-wallet"></i>
+      </button>
+
+      <!-- Menu Toggler -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Nav Links -->
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav align-items-center fw-semibold">
+
+          <li class="nav-item mx-2"><a class="nav-link" href="/home">Home</a></li>
+
+          <!-- Venues -->
+          <li class="nav-item dropdown mx-2">
+            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Venues</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="/venues">View Venues</a></li>
+              <li><a class="dropdown-item" href="/venues/new">Add Venue</a></li>
+            </ul>
+          </li>
+
+          <!-- Caterers -->
+          <li class="nav-item dropdown mx-2">
+            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Caterers</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="/caterers">View Caterers</a></li>
+              <li><a class="dropdown-item" href="/caterers/new">Add Caterer</a></li>
+            </ul>
+          </li>
+
+          <!-- Decor -->
+          <li class="nav-item dropdown mx-2">
+            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Decors</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="/decors">View Decors</a></li>
+              <li><a class="dropdown-item" href="/decors/new">Add Decor</a></li>
+            </ul>
+          </li>
+
+          <!-- Photographers -->
+          <li class="nav-item dropdown mx-2">
+            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Photographers</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="/photographers">View Photographers</a></li>
+              <li><a class="dropdown-item" href="/photographers/new">Add Photographer</a></li>
+            </ul>
+          </li>
+
+          <!-- Guests -->
+          <li class="nav-item mx-2">
+            <a class="nav-link" href="/guests">Guests</a>
+          </li>
+
+          <!-- Budget Button -->
+          <li class="nav-item mx-2 d-none d-lg-block">
+            <button class="btn btn-outline-warning px-3 py-1" onclick="openBudget()">
+              <i class="fa-solid fa-wallet me-2"></i>Budget
+            </button>
+          </li>
+
+          <!-- Contact -->
+          <li class="nav-item mx-2">
+            <a class="btn btn-outline-success px-3 py-1" href="/contact">Contact</a>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Budget Sidebar -->
+  <div id="budgetSidebar">
+    <button class="budget-close-btn" onclick="closeBudget()">✖</button>
+    
+    <h4 class="fw-bold mt-4"><i class="fa-solid fa-wallet text-primary me-2"></i>Your Budget</h4>
+    <hr>
+
+    <div id="budgetContent" style="max-height:75vh; overflow-y:auto;">
+      <p class="text-muted">Loading budget details...</p>
+    </div>
+
+    <a href="/budget" class="btn btn-primary w-100 mt-3">
+      <i class="fa-solid fa-gear me-2"></i>Manage Budget
+    </a>
+  </div>
+
+  <!-- Header -->
+  <header class="bg-light text-center py-4 shadow-sm mb-4">
+    <div class="container">
+      <h1 class="display-5 fw-bold text-dark mb-2">
+        Welcome to <span class="text-primary">Evento.AI</span>
+      </h1>
+      <p class="lead text-muted">Plan your Event Today ✨ — Manage venues, decor, catering, and more with AI assistance.</p>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container my-4"><%- body %></main>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-light text-center py-3 mt-5">
+    <p class="mb-1">© <%= new Date().getFullYear() %> <strong>Evento.AI</strong> — Plan. Celebrate. Enjoy.</p>
+    <small class="text-secondary">Built with ❤️ using Node.js, MongoDB & Bootstrap</small>
+  </footer>
+
+  <!-- JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Budget Logic -->
+  <script>
+    async function loadBudget() {
+      try {
+        const res = await fetch("/budget/data", { headers: { "Accept": "application/json" }});
+        if (!res.ok) throw new Error("Failed to fetch");
+        const data = await res.json();
+
+        let html = `
+          <h5 class="mb-3 fw-bold">
+            Total Spent: <span class="text-success">₹${data.total}</span>
+          </h5>
+          <hr>
+        `;
+
+        if (!data.items.length) {
+          html += `<p class="text-muted text-center mt-4">No expenses added yet.</p>`;
+        } else {
+          data.items.forEach(item => {
+            html += `
+              <div id="budget-item-${item._id}" class="d-flex justify-content-between align-items-center border-bottom py-2">
+                <div>
+                  <strong>${item.title}</strong><br>
+                  <small class="text-muted">${item.category}</small>
+                </div>
+                <div class="text-end">
+                  <strong>₹${item.cost}</strong><br>
+                  <button class="btn btn-sm btn-outline-danger mt-1"
+                          onclick="deleteBudgetItem('${item._id}', this)">
+                    Remove
+                  </button>
+                </div>
+              </div>
+            `;
+          });
+        }
+
+        document.getElementById("budgetContent").innerHTML = html;
+
+      } catch (err) {
+        document.getElementById("budgetContent").innerHTML =
+          "<p class='text-danger'>Error loading budget</p>";
+      }
+    }
+
+    // Delete budget item (AJAX)
+    async function deleteBudgetItem(id, btnEl) {
+      if (!confirm("Are you sure you want to remove this item?")) return;
+
+      // Optimistic UI: disable button while deleting
+      if (btnEl) {
+        btnEl.disabled = true;
+        btnEl.textContent = "Removing...";
+      }
+
+      try {
+        const res = await fetch(`/budget/delete/${id}`, {
+          method: "DELETE",
+          headers: { "Accept": "application/json" }
+        });
+
+        if (!res.ok) throw new Error("Delete failed");
+
+        // Remove row quickly, then refresh totals/list
+        const row = document.getElementById(`budget-item-${id}`);
+        if (row) row.remove();
+
+        // Reload to recompute total & ensure consistency
+        loadBudget();
+
+      } catch (err) {
+        alert("Failed to delete item");
+        if (btnEl) {
+          btnEl.disabled = false;
+          btnEl.textContent = "Remove";
+        }
+      }
+    }
+
+    function openBudget() {
+      document.getElementById("budgetSidebar").classList.add("open");
+      loadBudget();
+    }
+
+    function closeBudget() {
+      document.getElementById("budgetSidebar").classList.remove("open");
+    }
+  </script>
+</body>
+</html>
