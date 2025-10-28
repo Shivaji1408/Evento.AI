@@ -141,13 +141,16 @@ button:disabled {
     padding: 30px 20px;
   }
 
+  
   h1 {
     font-size: 2rem;
   }
 
+
   textarea {
     height: 110px;
   }
+
 
   button {
     font-size: 1rem;

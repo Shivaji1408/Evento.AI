@@ -4,29 +4,23 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI Idea Spark</title>
-  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-  
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
 
+<body>
   <div class="container">
     <h1>AI <i class="fa-solid fa-wand-magic-sparkles"></i> Invitation</h1>
     <p class="subtitle">Let's craft the perfect message.</p>
-
     <textarea id="promptInput" placeholder="What's on your mind? (e.g., 'a funny tweet about coffee', 'a professional email to my boss'...)"></textarea>
-    
     <button id="generateBtn">
       <span class="btn-text">Generate</span>
       <i class="btn-icon fa-solid fa-lightbulb"></i>
       <div class="loader"></div>
     </button>
-    
     <div id="resultContainer" class="hidden">
       <div class="ai-avatar">
         <i class="fa-solid fa-robot"></i>
@@ -34,7 +28,6 @@
       <div id="resultText"></div>
     </div>
   </div>
-
   <script src="script.js"></script>
 </body>
 </html>

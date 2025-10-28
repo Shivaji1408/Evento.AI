@@ -11,7 +11,6 @@ const port = 3000;
 app.use(cors());
 app.use(express.json());
 app.use(express.static("public"));
-
 const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
@@ -19,13 +18,10 @@ const client = new OpenAI({
 app.post("/generate", async (req, res) => {
   try {
     const { prompt } = req.body;
-
     if (!prompt) {
       return res.status(400).json({ error: "Prompt is missing." });
     }
-
     console.log("🟢 Received prompt:", prompt);
-
     const completion = await client.chat.completions.create({
       model: "gpt-4o-mini",
       messages: [
@@ -36,7 +32,6 @@ app.post("/generate", async (req, res) => {
 
     const aiMessage = completion.choices[0].message.content;
     console.log("✅ AI Message:", aiMessage);
-
     res.json({ message: aiMessage });
   } catch (error) {
     console.error("❌ Backend Error:", error.response?.data || error.message);
