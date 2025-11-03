@@ -1,0 +1,162 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #e0f2fe, #e0e7ff, #ede9fe);
+  min-height: 100vh;
+  color: #111827;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  background: #1e3a8a;
+  color: #fff;
+  text-align: center;
+  padding: 1.8rem 1rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+header h1 {
+  font-size: 2rem;
+}
+header p {
+  opacity: 0.9;
+  margin-top: 0.4rem;
+}
+
+.container {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  padding: 2rem;
+  gap: 2rem;
+}
+
+.form-section {
+  background: #fff;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  width: 320px;
+}
+
+.form-section h2 {
+  margin-bottom: 1rem;
+  color: #1e3a8a;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+label {
+  font-weight: 500;
+}
+
+input, button {
+  padding: 0.6rem 0.8rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+button {
+  background: linear-gradient(90deg, #1e3a8a, #3b82f6);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.3s ease;
+  width: 257px;
+}
+
+button:hover {
+  background: linear-gradient(90deg, #3b82f6, #1e3a8a);
+  box-shadow: 0 0 10px rgba(59,130,246,0.5);
+}
+
+.expense-list{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-content: center;
+    align-items: baseline;
+}
+
+.delete-btn {
+  background: linear-gradient(90deg, #dc2626, #ef4444);
+  margin-top: 1rem;
+  width: 172px;
+  height: 35px;
+}
+.delete-btn:hover {
+  background: linear-gradient(90deg, #ef4444, #b91c1c);
+  box-shadow: 0 0 10px rgba(239,68,68,0.4);
+}
+
+#calculteBtn{
+    background: linear-gradient(90deg, #1e3a8a, #3b82f6);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.3s ease;
+}
+.table-section {
+  background: #fff;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  width: 420px;
+}
+
+.table-section h2 {
+  margin-bottom: 1rem;
+  color: #1e3a8a;
+  display: inline;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+thead {
+  background: #1e3a8a;
+  color: white;
+}
+
+th, td {
+  padding: 0.8rem;
+  border-bottom: 1px solid #ddd;
+}
+
+tr:hover {
+  background: #f3f4f6;
+}
+
+.chart-section {
+  margin: 2rem auto;
+  width: 90%;
+  max-width: 800px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  padding: 2rem;
+  text-align: center;
+}
+
+.chart-section h2 {
+  margin-bottom: 1rem;
+  color: #1e3a8a;
+}
