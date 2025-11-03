@@ -6,12 +6,21 @@
 }
 
 body {
-  background: #f6f8fa;
+  background: linear-gradient(135deg, #e0f2fe, #e0e7ff, #ede9fe);
+  background-size: 300% 300%;
+  animation: gradientShift 10s ease infinite;
   color: #222;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%;}
+  100% { background-position: 0% 50%; }
+}
+
 
 
 header {
@@ -33,18 +42,19 @@ header p {
 
 
 .container {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 30px;
-  padding: 2rem;
-  flex-wrap: wrap;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    padding: 2rem;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-content: center;
 }
 
 
-.form-container,
-.output-container {
+.form-container{
   background: #fff;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -52,7 +62,14 @@ header p {
   width: 420px;
 }
 
+
+
 .output-container {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  width: auto;
   display: flex;
   flex-direction: column;
   max-height: 80vh;
@@ -128,6 +145,7 @@ button:hover {
   font-weight: 500;
   align-self: center;
 }
+
 #downloadPDF:hover {
   background: #3b82f6;
 }
@@ -136,7 +154,34 @@ button:hover {
 .output-container {
   position: relative;
 }
+
+
 #downloadPDF {
   position: sticky;
   bottom: 10px;
+}
+
+
+.form-container, .output-container {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.form-container:hover, .output-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(30, 58, 138, 0.2);
+}
+
+button {
+  background: linear-gradient(90deg, #1e3a8a, #3b82f6);
+  border: none;
+  color: #fff;
+  padding: 0.8rem 1.2rem;
+  border-radius: 8px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+button:hover {
+  background: linear-gradient(90deg, #3b82f6, #1e3a8a);
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.6);
 }

@@ -11,7 +11,7 @@
 <body>
   <header>
     <h1>Agentic AI Event Planner</h1>
-    <p>Your smart assistant for seamless event management</p>
+    <p>Your smart assistant for seamless multi-day event management</p>
   </header>
 
   <main class="container">
@@ -21,17 +21,21 @@
         <label>Event Name</label>
         <input type="text" id="eventName" placeholder="e.g. TechFest 2025" required />
 
-        <label>Event Date</label>
-        <input type="date" id="eventDate" required />
-
         <label>Event Type</label>
         <select id="eventType">
           <option>Conference</option>
           <option>Workshop</option>
           <option>Birthday</option>
           <option>Wedding</option>
+          <option>Festival</option>
           <option>Other</option>
         </select>
+
+        <label>Event Start Date</label>
+        <input type="date" id="eventStartDate" required />
+
+        <label>Event End Date</label>
+        <input type="date" id="eventEndDate" required />
 
         <label>Number of Guests</label>
         <input type="number" id="guestCount" placeholder="e.g. 200" min="1" required />
