@@ -1,73 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Event Budget Tracker</title>
-  <link rel="stylesheet" href="budget.css" />
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
-<body>
-  <header>
-    <h1>💰 Event Budget Tracker</h1>
-    <p>Track your event expenses easily and visualize spending!</p>
-  </header>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Event Budget Tracker</title>
+        <link rel="stylesheet" href="budget.css" />
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    </head>
+    <body>
+        <header>
+            <h1>💰 Event Budget Tracker</h1>
+            <p>Track your event expenses easily and visualize spending!</p>
+        </header>
+        <main class="container">
+            <section class="form-section">
+                <h2>Add Expense</h2>
+                <form id="expenseForm">
+                    <label>Expense Category</label>
+                    <input type="text" id="expenseName" placeholder="e.g. Catering, Decoration" required/>
+                    <label>Amount Spent (₹)</label>
+                    <input type="number" id="expenseAmount" placeholder="e.g. 25000" min="1" required/>
+                    <button type="submit">Add Expense</button>
+                </form><br>
 
-  <main class="container">
-    <section class="form-section">
-      <h2>Add Expense</h2>
-      <form id="expenseForm">
-        <label>Expense Category</label>
-        <input
-          type="text"
-          id="expenseName"
-          placeholder="e.g. Catering, Decoration"
-          required
-        />
+                <button id="calculateBtn">📊 Calculate Expense</button>
+            </section>
 
-        <label>Amount Spent (₹)</label>
-        <input
-          type="number"
-          id="expenseAmount"
-          placeholder="e.g. 25000"
-          min="1"
-          required
-        />
+            <section class="table-section">
+                <div class="expense-list">
+                    <h2>Expense List</h2>
+                    <button id="deleteBtn" class="delete-btn">🗑️ Delete Selected</button>
+                </div>
+                <table id="expenseTable">
+                    <thead>
+                        <tr>
+                            <th>Select</th>
+                            <th>Category</th>
+                            <th>Amount (₹)</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </section>
+        </main>
 
-        <button type="submit">Add Expense</button>
-      </form><br>
-
-      <button id="calculateBtn">📊 Calculate Expense</button>
-      <!-- Delete Button -->
-    </section>
-
-    <section class="table-section">
-        <div class="expense-list">
-            <h2>Expense List</h2>
-            <button id="deleteBtn" class="delete-btn">🗑️ Delete Selected</button>
-        </div>
-      <table id="expenseTable">
-        <thead>
-          <tr>
-            <th>Select</th>
-            <th>Category</th>
-            <th>Amount (₹)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- Expenses will appear here -->
-        </tbody>
-      </table>
-    </section>
-  </main>
-
-  <section class="chart-section">
-    <h2>Expense Breakdown</h2>
-    <canvas id="expenseChart"></canvas>
-  </section>
-
-  <script src="budget.js"></script>
-
-  <h1>Nakul Testing</h1>
-</body>
+        <section class="chart-section">
+            <h2>Expense Breakdown</h2>
+            <canvas id="expenseChart"></canvas>
+        </section>
+        <script src="budget.js"></script>
+    </body>
 </html>
