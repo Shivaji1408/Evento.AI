@@ -12,20 +12,19 @@
             <h1>💰 Event Budget Tracker</h1>
             <p>Track your event expenses easily and visualize spending!</p>
         </header>
+
         <main class="container">
             <section class="form-section">
                 <h2>Add Expense</h2>
                 <form id="expenseForm">
                     <label>Expense Category</label>
-                    <input type="text" id="expenseName" placeholder="e.g. Catering, Decoration" required/>
+                    <input type="text" id="expenseName" placeholder="e.g. Catering, Decoration" required />
                     <label>Amount Spent (₹)</label>
-                    <input type="number" id="expenseAmount" placeholder="e.g. 25000" min="1" required/>
+                    <input type="number" id="expenseAmount" placeholder="e.g. 25000" min="1" required />
                     <button type="submit">Add Expense</button>
                 </form><br>
-
                 <button id="calculateBtn">📊 Calculate Expense</button>
             </section>
-
             <section class="table-section">
                 <div class="expense-list">
                     <h2>Expense List</h2>
@@ -39,8 +38,11 @@
                             <th>Amount (₹)</th>
                         </tr>
                     </thead>
-                    <tbody></tbody>
+                <tbody></tbody>
                 </table>
+                <div class="total-budget">
+                    <strong>Total Budget:</strong> ₹<span id="totalAmount">0</span>
+                </div>
             </section>
         </main>
 
