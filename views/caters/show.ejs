@@ -1,0 +1,185 @@
+<% layout('layouts/boilerplate') %>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<div class="container-fluid py-5 bg-light min-vh-100">
+
+  <!-- Header -->
+  <div class="px-5 py-5 bg-dark text-white text-center">
+    <h1 class="mb-3" style="font-family:'Playfair Display',serif; font-size:3rem;">
+      <i class="fa-solid fa-utensils me-3 text-warning"></i>
+      <%= cater.name %>
+    </h1>
+    <p class="opacity-75 fs-5">Delightful Catering Experience for Your Events</p>
+  </div>
+
+  <div class="row g-0 mt-4 px-4">
+
+    <!-- LEFT SIDE -->
+    <div class="col-lg-8 col-md-7 p-4">
+
+      <!-- Image -->
+      <% if (cater.imageUrl) { %>
+        <img src="<%= cater.imageUrl %>" class="w-100 rounded-3 shadow mb-4" style="height:450px; object-fit:cover;">
+      <% } else { %>
+        <img src="https://via.placeholder.com/1200x500?text=No+Image+Available" class="w-100 rounded-3 shadow mb-4">
+      <% } %>
+
+      <!-- Cuisine -->
+      <p class="text-muted fs-5 mb-2">
+        <i class="fa-solid fa-plate-wheat text-warning me-2"></i>
+        Cuisine Type: <strong><%= cater.cuisineType %></strong>
+      </p>
+
+      <!-- Price -->
+      <p class="fw-semibold text-success fs-4 mb-2">
+        ₹ <%= cater.pricePerPlate %> / Plate
+      </p>
+
+      <!-- Specialties -->
+      <% if (cater.specialties?.length > 0) { %>
+        <h5 class="fw-bold text-dark mt-4 mb-2">Specialties</h5>
+        <div class="d-flex flex-wrap gap-2 mb-2">
+          <% cater.specialties.forEach(spec => { %>
+            <span class="badge bg-light text-dark border px-3 py-2 rounded-pill shadow-sm">
+              <%= spec %>
+            </span>
+          <% }) %>
+        </div>
+      <% } %>
+
+      <!-- Contact -->
+      <p class="text-muted fs-6 mt-3">
+        <i class="fa-solid fa-phone text-success me-2"></i> <%= cater.contactNumber %><br>
+        <i class="fa-solid fa-envelope text-primary me-2 mt-1"></i> <%= cater.email %>
+      </p>
+
+      <p class="small text-muted mt-3">
+        <i class="fa-solid fa-calendar-days me-1"></i>
+        Added on: <%= new Date(cater.createdAt).toLocaleDateString() %>
+      </p>
+
+      <a href="/caterers" class="btn btn-outline-secondary px-4 mt-3">
+        <i class="fa-solid fa-arrow-left me-2"></i>Back
+      </a>
+
+      <!-- ⭐⭐⭐⭐⭐ RATING SECTION -->
+      <hr class="my-5" id="reviews">
+
+      <h3 class="fw-bold mb-3">Customer Reviews & Ratings</h3>
+
+      <!-- Average Rating -->
+      <div class="mb-3">
+        <% if (totalReviews > 0) { %>
+          <h5>
+            ⭐ <%= avgRating %> / 5
+            <span class="text-muted fs-6">(<%= totalReviews %> reviews)</span>
+          </h5>
+        <% } else { %>
+          <p class="text-muted">No reviews yet.</p>
+        <% } %>
+      </div>
+
+      <!-- Add Rating -->
+      <form action="/caterers/<%= cater._id %>/rate" method="POST" class="mb-4">
+
+        <div class="mb-2">
+          <label class="form-label fw-semibold">Your Name</label>
+          <input type="text" name="userName" class="form-control" required>
+        </div>
+
+        <!-- Clickable Rating Stars -->
+        <div class="mb-2">
+          <label class="form-label fw-semibold">Your Rating</label>
+          <div class="star-rating">
+            <input type="hidden" name="stars" id="starsInput" value="0">
+            <span class="star" data-val="1">&#9733;</span>
+            <span class="star" data-val="2">&#9733;</span>
+            <span class="star" data-val="3">&#9733;</span>
+            <span class="star" data-val="4">&#9733;</span>
+            <span class="star" data-val="5">&#9733;</span>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Comment (optional)</label>
+          <textarea name="comment" class="form-control"></textarea>
+        </div>
+
+        <button class="btn btn-primary">Submit Review</button>
+      </form>
+
+      <!-- Reviews List -->
+      <% ratings.forEach(r => { %>
+        <div class="border p-3 mb-3 rounded-3 bg-white shadow-sm">
+          <h6 class="fw-bold mb-1"><%= r.userName %></h6>
+
+          <p class="mb-1 text-warning">
+            <% for (let s = 1; s <= r.stars; s++) { %> ⭐ <% } %>
+          </p>
+
+          <p><%= r.comment %></p>
+
+          <!-- Delete Rating -->
+          <form action="/caterers/<%= cater._id %>/rate/<%= r._id %>?_method=DELETE" method="POST">
+            <button class="btn btn-sm btn-danger">
+              <i class="fa-solid fa-trash"></i> Delete
+            </button>
+          </form>
+        </div>
+      <% }) %>
+
+    </div>
+
+    <!-- RIGHT SIDE -->
+    <div class="col-lg-4 col-md-5 bg-white p-5 border-start shadow-sm">
+      <div class="sticky-top" style="top:5rem;">
+
+        <!-- Rating Summary -->
+        <div class="text-center mb-5">
+          <h4 class="fw-bold text-dark mb-2">Customer Rating</h4>
+          <h2 class="text-warning"><%= avgRating %> ⭐</h2>
+          <p class="text-muted small">Based on <%= totalReviews %> reviews</p>
+        </div>
+
+        <!-- Book Button -->
+        <form action="/caterers/<%= cater._id %>/book" method="POST">
+          <button class="btn btn-success btn-lg px-5 shadow w-100">
+            <i class="fa-solid fa-calendar-check me-2"></i>Book This Caterer
+          </button>
+        </form>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<style>
+.star-rating .star {
+  font-size: 2rem;
+  color: #ccc;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.star-rating .star.selected {
+  color: gold;
+}
+</style>
+
+<script>
+const stars = document.querySelectorAll(".star-rating .star");
+const inputStars = document.getElementById("starsInput");
+
+stars.forEach(star => {
+  star.addEventListener("click", function () {
+    const val = this.dataset.val;
+    inputStars.value = val;
+
+    stars.forEach(s => s.classList.remove("selected"));
+    for (let i = 0; i < val; i++) {
+      stars[i].classList.add("selected");
+    }
+  });
+});
+</script>

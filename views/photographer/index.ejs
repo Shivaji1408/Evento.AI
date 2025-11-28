@@ -1,0 +1,138 @@
+<% layout('layouts/boilerplate') %>
+
+<section class="py-5">
+  <div class="container">
+    <!-- Page Header -->
+    <div class="text-center mb-4">
+      <h2 class="fw-bold text-primary display-6">
+        <i class="fa-solid fa-camera-retro me-2 text-warning"></i> Our Professional Photographers
+      </h2>
+      <p class="text-muted">Capture your special moments with the best in the business 📸</p>
+    </div>
+
+    <!-- FILTER SECTION -->
+    <div class="card shadow-sm mb-4 border-0">
+      <div class="card-body">
+        <form action="/photographers" method="GET" class="row g-3">
+
+          <!-- City Filter -->
+          <div class="col-md-4">
+            <label class="form-label fw-semibold">Filter by City</label>
+            <select name="city" class="form-select">
+              <option value="">All Cities</option>
+              <option value="Mumbai" <%= city === "Mumbai" ? "selected" : "" %>>Mumbai</option>
+              <option value="Pune" <%= city === "Pune" ? "selected" : "" %>>Pune</option>
+              <option value="Delhi" <%= city === "Delhi" ? "selected" : "" %>>Delhi</option>
+              <option value="Bangalore" <%= city === "Bangalore" ? "selected" : "" %>>Bangalore</option>
+              <option value="Hyderabad" <%= city === "Hyderabad" ? "selected" : "" %>>Hyderabad</option>
+              <option value="Chennai" <%= city === "Chennai" ? "selected" : "" %>>Chennai</option>
+            </select>
+          </div>
+
+          <div class="col-md-2 d-flex align-items-end">
+            <button type="submit" class="btn btn-primary w-100">
+              <i class="fa-solid fa-filter me-1"></i> Filter
+            </button>
+          </div>
+
+          <div class="col-md-2 d-flex align-items-end">
+            <a href="/photographers" class="btn btn-outline-secondary w-100">
+              <i class="fa-solid fa-rotate-left me-1"></i> Reset
+            </a>
+          </div>
+
+        </form>
+      </div>
+    </div>
+
+    <!-- Photographer Cards -->
+    <div class="row g-4">
+      <% if (photographers && photographers.length > 0) { %>
+        <% photographers.forEach(photographer => { %>
+          <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="card photographer-card border-0 shadow-lg h-100">
+              <div class="position-relative">
+                <img src="<%= photographer.imageUrl || 'https://via.placeholder.com/400x300?text=Photographer' %>"
+                  class="card-img-top rounded-top" alt="<%= photographer.name %>">
+                <span class="badge bg-primary position-absolute top-0 start-0 m-3 px-3 py-2 shadow">
+                  <%= photographer.serviceType || 'Photography' %>
+                </span>
+              </div>
+
+              <div class="card-body d-flex flex-column">
+                <h5 class="card-title fw-bold text-dark mb-2">
+                  <%= photographer.name %>
+                </h5>
+
+                <p class="card-text text-muted mb-1">
+                  <i class="fa-solid fa-location-dot text-danger me-1"></i>
+                  <%= photographer.city || 'Not specified' %>
+                </p>
+
+                <p class="mb-2">
+                  <i class="fa-solid fa-star text-warning me-1"></i>
+                  <span class="text-muted">Specialties:</span>
+                  <%= photographer.specialties?.length ? photographer.specialties.join(', ') : 'General Photography' %>
+                </p>
+
+                <p class="fw-semibold text-success mb-2">
+                  ₹ <%= photographer.pricePerDay %> / day
+                </p>
+              </div>
+
+              <div class="card-footer bg-light text-center border-0">
+                <a href="/photographers/<%= photographer._id %>" class="btn btn-outline-primary w-100 mt-2">
+                  <i class="fa-solid fa-eye"></i> View Details
+                </a>
+              </div>
+            </div>
+          </div>
+        <% }) %>
+      <% } else { %>
+        <div class="col-12 text-center">
+          <p class="text-muted fs-5">No photographers found 😔</p>
+          <a href="/photographers/new" class="btn btn-primary mt-3">
+            <i class="fa-solid fa-plus me-2"></i> Add New Photographer
+          </a>
+        </div>
+      <% } %>
+    </div>
+  </div>
+</section>
+
+<!-- Custom Styles -->
+<style>
+  .photographer-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 20px;
+    overflow: hidden;
+  }
+
+  .photographer-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  }
+
+  .photographer-card img {
+    object-fit: cover;
+    height: 250px;
+    width: 100%;
+  }
+
+  .badge.bg-primary {
+    background: linear-gradient(135deg, #007bff, #0056d2);
+    font-size: 0.85rem;
+  }
+
+  @media (max-width: 768px) {
+    .photographer-card img {
+      height: 220px;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .photographer-card img {
+      height: 200px;
+    }
+  }
+</style>

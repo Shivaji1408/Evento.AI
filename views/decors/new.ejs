@@ -1,0 +1,113 @@
+<% layout('layouts/boilerplate') %>
+
+<div class="container py-5">
+
+  <!-- HEADER -->
+  <div class="text-center mb-5">
+    <h2 class="fw-bold" style="color: #000;">
+      <i class="fa-solid fa-swatchbook me-2 text-primary"></i> Register a New Decor Service
+    </h2>
+    <p class="text-muted fs-6">
+      Showcase your unique decoration style and help clients bring their dream events to life.
+    </p>
+  </div>
+
+  <!-- FORM CARD -->
+  <div class="card shadow-lg border-0 rounded-4 mx-auto" style="max-width: 800px; background-color: #fff;">
+    <div class="card-body px-5 py-4">
+
+      <form action="/decors" method="POST" enctype="multipart/form-data">
+
+        <!-- Decor Name -->
+        <div class="mb-4">
+          <label for="name" class="form-label fw-semibold" style="color: #000;">
+            Decor Service Name <span class="text-danger">*</span>
+          </label>
+          <input type="text" id="name" name="decor[name]" class="form-control form-control-lg shadow-sm"
+                 placeholder="e.g., Dream Weddings Decor" required>
+        </div>
+
+        <!-- Style -->
+        <div class="mb-4">
+          <label for="style" class="form-label fw-semibold" style="color: #000;">
+            Decoration Style
+          </label>
+          <input type="text" id="style" name="decor[style]" class="form-control shadow-sm"
+                 placeholder="e.g., Traditional, Modern, Theme-based">
+        </div>
+
+        <!-- City -->
+        <div class="mb-4">
+          <label for="city" class="form-label fw-semibold" style="color: #000;">
+            City
+          </label>
+          <input type="text" id="city" name="decor[city]" class="form-control shadow-sm" placeholder="e.g., Mumbai, Delhi">
+        </div>
+
+        <!-- Price Range -->
+        <div class="row mb-4">
+          <div class="col-md-6">
+            <label for="priceMin" class="form-label fw-semibold" style="color: #000;">
+              Minimum Price (₹)
+            </label>
+            <input type="number" id="priceMin" name="decor[priceRange][min]" class="form-control shadow-sm"
+                   placeholder="e.g., 5000">
+          </div>
+          <div class="col-md-6">
+            <label for="priceMax" class="form-label fw-semibold" style="color: #000;">
+              Maximum Price (₹)
+            </label>
+            <input type="number" id="priceMax" name="decor[priceRange][max]" class="form-control shadow-sm"
+                   placeholder="e.g., 50000">
+          </div>
+        </div>
+
+        <!-- Services Offered -->
+        <div class="mb-4">
+          <label for="servicesOffered" class="form-label fw-semibold" style="color: #000;">
+            Services Offered (comma-separated)
+          </label>
+          <input type="text" id="servicesOffered" name="decor[servicesOffered]" class="form-control shadow-sm"
+                 placeholder="e.g., Stage Decoration, Lighting, Flower Arrangement">
+        </div>
+
+        <!-- Contact Number & Email -->
+        <div class="row mb-4">
+          <div class="col-md-6">
+            <label for="contactNumber" class="form-label fw-semibold" style="color: #000;">
+              Contact Number
+            </label>
+            <input type="text" id="contactNumber" name="decor[contactNumber]" class="form-control shadow-sm"
+                   placeholder="e.g., +91 9876543210">
+          </div>
+          <div class="col-md-6">
+            <label for="email" class="form-label fw-semibold" style="color: #000;">
+              Email
+            </label>
+            <input type="email" id="email" name="decor[email]" class="form-control shadow-sm"
+                   placeholder="e.g., contact@dreamdecor.com">
+          </div>
+        </div>
+
+        <!-- Image Upload -->
+        <div class="mb-4">
+          <label for="image" class="form-label fw-semibold" style="color: #000;">
+            Upload Decor Image
+          </label>
+          <input type="file" id="image" name="image" class="form-control shadow-sm">
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="d-flex justify-content-between align-items-center mt-4">
+          <a href="/decors" class="btn btn-outline-secondary px-4">
+            <i class="fa-solid fa-arrow-left me-2"></i> Back
+          </a>
+          <button type="submit" class="btn btn-primary px-5 py-2 fw-semibold shadow-sm">
+            <i class="fa-solid fa-paper-plane me-2"></i> Submit Decor
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>

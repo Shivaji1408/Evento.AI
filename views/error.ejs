@@ -1,0 +1,11 @@
+<% layout('layouts/boilerplate') %>
+
+<div class="container py-5 text-center">
+  <h1 class="text-danger mb-4">
+    <i class="fa-solid fa-circle-exclamation"></i> Error Occurred
+  </h1>
+
+  <p class="text-muted fs-5"><%= err || "Something went wrong." %></p>
+
+  <a href="/" class="btn btn-primary mt-4">Go Home</a>
+</div>

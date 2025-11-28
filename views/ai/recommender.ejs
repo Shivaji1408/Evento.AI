@@ -1,0 +1,45 @@
+<% layout('layouts/boilerplate') %>
+
+<div class="container py-5">
+  <div class="text-center mb-4">
+    <h2 class="fw-bold text-dark">Smart Event Recommender</h2>
+    <p class="text-muted">Tell us your event type, budget and guest count — we'll recommend the best-fit vendors from your database.</p>
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <form action="/ai/recommender" method="POST" class="p-4 shadow-lg bg-white rounded-3">
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Event Name / Type</label>
+          <input name="eventType" class="form-control" value="<%= meta && meta.eventType ? meta.eventType : '' %>" placeholder="Wedding, Conference, Birthday" required>
+        </div>
+
+        <div class="row g-2">
+          <div class="col-md-6 mb-3">
+            <label class="form-label fw-semibold">Approx. Guests</label>
+            <input name="guests" type="number" min="1" class="form-control" value="<%= meta && meta.guests ? meta.guests : '' %>">
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label fw-semibold">Total Budget (₹)</label>
+            <input name="budget" type="number" min="0" class="form-control" value="<%= meta && meta.budget ? meta.budget : '' %>" required>
+          </div>
+        </div>
+
+        <div class="row g-2">
+          <div class="col-md-6 mb-3">
+            <label class="form-label fw-semibold">City (optional)</label>
+            <input name="city" class="form-control" value="<%= meta && meta.city ? meta.city : '' %>">
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label fw-semibold">Date (optional)</label>
+            <input name="date" type="date" class="form-control" value="<%= meta && meta.date ? meta.date : '' %>">
+          </div>
+        </div>
+
+        <div class="d-grid">
+          <button class="btn btn-primary btn-lg">Find Recommendations</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

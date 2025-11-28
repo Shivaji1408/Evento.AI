@@ -1,0 +1,81 @@
+<% layout('layouts/boilerplate') %>
+
+<div class="container py-5">
+
+  <!-- HEADER SECTION -->
+  <div class="text-center mb-5">
+    <h2 class="fw-bold" style="color:#000;">
+      <i class="fa-solid fa-camera-retro me-2 text-primary"></i> Register a New Photographer
+    </h2>
+    <p class="text-muted fs-6">
+      Add your photography services to help clients capture their special moments beautifully.
+    </p>
+  </div>
+
+  <!-- FORM CARD -->
+  <div class="card shadow-lg border-0 rounded-4 mx-auto" style="max-width:800px; background-color:#fff;">
+    <div class="card-body px-5 py-4">
+      <form action="/photographers" method="POST" enctype="multipart/form-data">
+
+        <!-- Photographer Name -->
+        <div class="mb-4">
+          <label for="name" class="form-label fw-semibold" style="color:#000;">Photographer Name <span class="text-danger">*</span></label>
+          <input type="text" id="name" name="photographer[name]" class="form-control form-control-lg shadow-sm" placeholder="e.g., LensCraft Studios" required>
+        </div>
+
+        <!-- Service Type -->
+        <div class="mb-4">
+          <label for="serviceType" class="form-label fw-semibold" style="color:#000;">Service Type</label>
+          <input type="text" id="serviceType" name="photographer[serviceType]" class="form-control shadow-sm" placeholder="e.g., Photography, Videography, Both">
+        </div>
+
+        <!-- Specialties -->
+        <div class="mb-4">
+          <label for="specialties" class="form-label fw-semibold" style="color:#000;">Specialties (comma-separated)</label>
+          <input type="text" id="specialties" name="photographer[specialties]" class="form-control shadow-sm" placeholder="e.g., Wedding, Corporate, Candid">
+        </div>
+
+        <!-- City -->
+        <div class="mb-4">
+          <label for="city" class="form-label fw-semibold" style="color:#000;">City</label>
+          <input type="text" id="city" name="photographer[city]" class="form-control shadow-sm" placeholder="e.g., Pune">
+        </div>
+
+        <!-- Price Per Day -->
+        <div class="mb-4">
+          <label for="pricePerDay" class="form-label fw-semibold" style="color:#000;">Price Per Day (₹) <span class="text-danger">*</span></label>
+          <input type="number" id="pricePerDay" name="photographer[pricePerDay]" class="form-control shadow-sm" placeholder="e.g., 15000" required>
+        </div>
+
+        <!-- Contact Details -->
+        <div class="row mb-4">
+          <div class="col-md-6">
+            <label for="contactNumber" class="form-label fw-semibold" style="color:#000;">Contact Number</label>
+            <input type="text" id="contactNumber" name="photographer[contactNumber]" class="form-control shadow-sm" placeholder="+91 9876543210">
+          </div>
+          <div class="col-md-6">
+            <label for="email" class="form-label fw-semibold" style="color:#000;">Email</label>
+            <input type="email" id="email" name="photographer[email]" class="form-control shadow-sm" placeholder="e.g., lenscraft@gmail.com">
+          </div>
+        </div>
+
+        <!-- Image Upload -->
+        <div class="mb-4">
+          <label for="image" class="form-label fw-semibold" style="color:#000;">Upload Portfolio Image</label>
+          <input type="file" id="image" name="image" class="form-control shadow-sm">
+        </div>
+
+        <!-- Submit -->
+        <div class="d-flex justify-content-between mt-4">
+          <a href="/photographers" class="btn btn-outline-secondary px-4">
+            <i class="fa-solid fa-arrow-left me-2"></i> Back
+          </a>
+          <button type="submit" class="btn btn-primary px-5 py-2 fw-semibold shadow-sm">
+            <i class="fa-solid fa-paper-plane me-2"></i> Save Photographer
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>

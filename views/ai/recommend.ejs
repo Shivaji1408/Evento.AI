@@ -1,0 +1,132 @@
+<% layout('layouts/boilerplate') %>
+
+<div class="container py-5">
+
+  <!-- HEADER -->
+  <div class="text-center mb-5">
+    <h2 class="fw-bold text-dark">AI Event Recommender</h2>
+    <p class="text-muted">Let AI choose the best venue, decor, caterers & photographers based on your event.</p>
+  </div>
+
+  <div class="row g-4">
+
+    <!-- LEFT SIDE INPUT FORM -->
+    <div class="col-lg-5">
+      <div class="card shadow-sm border-0 rounded-4 p-4">
+
+        <form action="/ai/recommend" method="POST">
+          <h5 class="fw-semibold mb-3">Enter Event Details</h5>
+
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Event Type</label>
+            <input type="text" name="eventType" class="form-control" placeholder="Wedding, Birthday, Corporate" required value="<%= meta.eventType || '' %>">
+          </div>
+
+          <div class="row g-2">
+            <div class="col-md-6 mb-3">
+              <label class="form-label fw-semibold">Budget (₹)</label>
+              <input type="number" name="budget" class="form-control" required value="<%= meta.budget || '' %>">
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <label class="form-label fw-semibold">Guests</label>
+              <input type="number" name="guests" class="form-control" required value="<%= meta.guests || '' %>">
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-semibold">City</label>
+            <input type="text" name="city" class="form-control" placeholder="Enter city" required value="<%= meta.city || '' %>">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Preferred Style (optional)</label>
+            <input type="text" name="style" class="form-control" placeholder="Royal, Modern, Minimal" value="<%= meta.style || '' %>">
+          </div>
+
+          <button class="btn btn-primary w-100 py-2 fw-bold" type="submit">
+            Generate Recommendations
+          </button>
+
+        </form>
+
+        <% if (error) { %>
+          <div class="alert alert-danger mt-3"><%= error %></div>
+        <% } %>
+
+      </div>
+    </div>
+
+    <!-- RIGHT SIDE OUTPUT -->
+    <div class="col-lg-7">
+      <div class="card shadow-sm border-0 rounded-4 p-4">
+
+        <h5 class="fw-bold mb-4">AI Recommendation Output</h5>
+
+        <% if (!output) { %>
+          <div class="text-center text-muted py-5">
+            No recommendations yet. Fill details & generate.
+          </div>
+        <% } else { %>
+
+          <!-- VENUE -->
+          <div class="mb-4 p-3 rounded-3 border bg-light">
+            <h6 class="fw-bold text-primary">🏛 Best Venue</h6>
+            <p class="mb-1"><strong><%= output.venue.name %></strong></p>
+            <p class="small text-muted mb-1">Score: <%= output.venue.score %>/10</p>
+            <p class="small"><%= output.venue.reason %></p>
+          </div>
+
+          <!-- CATERER -->
+          <div class="mb-4 p-3 rounded-3 border bg-light">
+            <h6 class="fw-bold text-success">🍽 Best Caterer</h6>
+            <p class="mb-1"><strong><%= output.caterer.name %></strong></p>
+            <p class="small text-muted mb-1">Score: <%= output.caterer.score %>/10</p>
+            <p class="small"><%= output.caterer.reason %></p>
+          </div>
+
+          <!-- DECOR -->
+          <div class="mb-4 p-3 rounded-3 border bg-light">
+            <h6 class="fw-bold text-warning">🎀 Best Decor Service</h6>
+            <p class="mb-1"><strong><%= output.decor.name %></strong></p>
+            <p class="small text-muted mb-1">Score: <%= output.decor.score %>/10</p>
+            <p class="small"><%= output.decor.reason %></p>
+          </div>
+
+          <!-- PHOTOGRAPHER -->
+          <div class="mb-4 p-3 rounded-3 border bg-light">
+            <h6 class="fw-bold text-dark">📸 Best Photographer</h6>
+            <p class="mb-1"><strong><%= output.photographer.name %></strong></p>
+            <p class="small text-muted mb-1">Score: <%= output.photographer.score %>/10</p>
+            <p class="small"><%= output.photographer.reason %></p>
+          </div>
+
+          <!-- TOTAL ESTIMATION -->
+          <div class="alert alert-primary">
+            <strong>Estimated Total Cost:</strong> ₹<%= output.estimatedTotal %>
+          </div>
+
+          <!-- NEXT STEPS -->
+          <div class="mt-4 p-3 border rounded-3 bg-white">
+            <h6 class="fw-bold mb-2">📌 What Next?</h6>
+
+            <ul class="small text-muted">
+              <% output.whatNext.forEach(step => { %>
+                <li><%= step %></li>
+              <% }) %>
+            </ul>
+          </div>
+
+        <% } %>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<style>
+  .border {
+    border-color: #dedede !important;
+  }
+</style>

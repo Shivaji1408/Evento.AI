@@ -1,0 +1,264 @@
+<% layout('layouts/boilerplate') %>
+
+<div class="container py-5">
+  <div class="text-center mb-4">
+    <h2 class="fw-bold text-dark">AI Event Scheduler</h2>
+    <p class="text-muted">Create, edit, reorder and complete your event timeline.</p>
+  </div>
+
+  <div class="row g-4">
+
+    <!-- LEFT FORM -->
+    <div class="col-lg-5">
+      <div class="card shadow-sm border-0 rounded-4 p-4">
+
+        <form id="schedulerForm" action="/ai/scheduler" method="POST">
+
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Event Name</label>
+            <input type="text" name="eventName" class="form-control" required value="<%= meta.eventName || '' %>">
+          </div>
+
+          <div class="row g-2">
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Event Date</label>
+              <input type="date" name="eventDate" class="form-control" required value="<%= meta.eventDate || '' %>">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Guests</label>
+              <input type="number" name="guests" class="form-control" value="<%= meta.guests || '' %>">
+            </div>
+          </div>
+
+          <div class="row g-2 mt-2">
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Start Time</label>
+              <input type="time" name="startTime" class="form-control" required value="<%= meta.startTime || '' %>">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">End Time</label>
+              <input type="time" name="endTime" class="form-control" required value="<%= meta.endTime || '' %>">
+            </div>
+          </div>
+
+          <div class="mt-3">
+            <label class="form-label fw-semibold">Optional Sub-Events (comma separated)</label>
+            <input type="text" name="userSubEvents" class="form-control"
+              placeholder="e.g. Makeup, DJ Performance" value="<%= meta.userSubEvents || '' %>">
+          </div>
+
+          <div class="mt-3">
+            <label class="form-label fw-semibold">Language</label>
+            <select name="language" class="form-select">
+              <option value="English">English</option>
+              <option value="Hindi">Hindi</option>
+            </select>
+          </div>
+
+          <button class="btn btn-primary w-100 mt-3">Generate Schedule</button>
+        </form>
+
+        <% if (warning) { %>
+          <div class="alert alert-warning mt-3"><%= warning %></div>
+        <% } %>
+
+        <% if (error) { %>
+          <div class="alert alert-danger mt-3"><%= error %></div>
+        <% } %>
+
+      </div>
+    </div>
+
+    <!-- RIGHT SCHEDULE UI -->
+    <div class="col-lg-7">
+      <div class="card shadow-sm border-0 rounded-4 p-4">
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h5 class="fw-bold">Event Timeline</h5>
+        </div>
+
+        <div id="scheduleArea">
+
+          <% if (!schedule || schedule.length === 0) { %>
+            <div class="text-center text-muted py-5">No schedule yet. Generate one using the form.</div>
+          <% } else { %>
+
+            <div id="eventsList" class="list-group">
+
+              <% schedule.forEach((s) => { %>
+                <div class="list-group-item mb-2 p-3 shadow-sm rounded-3 event-item" 
+                     data-id="<%= s.id %>" style="border-left: 6px solid #0d6efd;">
+
+                  <div class="d-flex justify-content-between align-items-start">
+
+                    <!-- Drag handle -->
+                    <div class="handle me-3" style="cursor: grab;">
+                      <i class="fa-solid fa-grip-vertical"></i>
+                    </div>
+
+                    <div class="flex-fill">
+
+                      <div class="d-flex justify-content-between">
+                        <strong class="event-title"><%= s.title %></strong>
+
+                        <div>
+                          <!-- Remove button -->
+                          <button class="btn btn-sm btn-outline-danger remove-btn">Remove</button>
+
+                          <!-- Mark completed -->
+                          <button class="btn btn-sm btn-success complete-btn">✓</button>
+                        </div>
+                      </div>
+
+                      <small class="text-muted duration-label"><%= s.duration %> min</small>
+
+                      <!-- Duration slider -->
+                      <input type="range" min="5" max="240" value="<%= s.duration %>" 
+                             class="form-range duration-slider mt-2">
+
+                      <!-- Start time adjust -->
+                      <label class="form-label small text-muted mt-2">Adjust Start Time</label>
+                      <input type="time" class="form-control start-time-input" value="">
+
+                      <!-- Computed times -->
+                      <div class="d-flex justify-content-between mt-1 small text-muted">
+                        <span>Start: <span class="start-time">--:--</span></span>
+                        <span>End: <span class="end-time">--:--</span></span>
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                </div>
+              <% }) %>
+
+            </div>
+
+          <% } %>
+
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- SortableJS -->
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+
+<script>
+  <% if (schedule) { %>
+
+  function toMinutes(t) {
+    const [h, m] = t.split(":").map(Number);
+    return h * 60 + m;
+  }
+
+  function toTimeStr(mins) {
+    mins = Math.max(0, Math.round(mins));
+    const h = Math.floor(mins / 60);
+    const m = mins % 60;
+    return String(h).padStart(2, "0") + ":" + String(m).padStart(2, "0");
+  }
+
+  const listEl = document.getElementById("eventsList");
+
+  let model = [...listEl.querySelectorAll(".event-item")].map(el => ({
+    id: el.dataset.id,
+    title: el.querySelector(".event-title").innerText.trim(),
+    duration: Number(el.querySelector(".duration-slider").value),
+    el
+  }));
+
+  let startM = toMinutes("<%= meta.startTime %>");
+  let endM = toMinutes("<%= meta.endTime %>");
+
+  // FULL RECALC
+  function computeTimes() {
+    let cursor = startM;
+
+    model.forEach(item => {
+      const customStart = item.el.querySelector(".start-time-input")?.value;
+
+      if (customStart) cursor = toMinutes(customStart);
+
+      item.start = cursor;
+      item.end = cursor + item.duration;
+      cursor = item.end;
+    });
+
+    renderTimes();
+  }
+
+  // Render UI
+  function renderTimes() {
+    model.forEach(item => {
+      item.el.querySelector(".start-time").innerText = toTimeStr(item.start);
+      item.el.querySelector(".end-time").innerText = toTimeStr(item.end);
+      item.el.querySelector(".duration-label").innerText = item.duration + " min";
+    });
+  }
+
+  // Duration slider change
+  listEl.addEventListener("input", e => {
+    if (e.target.classList.contains("duration-slider")) {
+      const el = e.target.closest(".event-item");
+      const m = model.find(x => x.id === el.dataset.id);
+      m.duration = Number(e.target.value);
+      computeTimes();
+    }
+  });
+
+  // Start time edited
+  listEl.addEventListener("change", e => {
+    if (e.target.classList.contains("start-time-input")) {
+      computeTimes();
+    }
+  });
+
+  // Remove event
+  listEl.addEventListener("click", e => {
+    if (e.target.classList.contains("remove-btn")) {
+      const el = e.target.closest(".event-item");
+      el.remove();
+      model = model.filter(m => m.id !== el.dataset.id);
+      computeTimes();
+    }
+  });
+
+  // Mark completed
+  listEl.addEventListener("click", e => {
+    if (e.target.classList.contains("complete-btn")) {
+      const el = e.target.closest(".event-item");
+      el.style.background = "#d4edda";       // green highlight
+      el.style.borderLeftColor = "#28a745";  // green bar
+      e.target.innerText = "✓ Done";
+      e.target.disabled = true;
+    }
+  });
+
+  // Drag reorder
+  new Sortable(listEl, {
+    handle: ".handle",
+    animation: 150,
+    onEnd: () => {
+      const newOrder = [...listEl.querySelectorAll(".event-item")].map(el => el.dataset.id);
+      model = newOrder.map(id => model.find(m => m.id === id));
+      computeTimes();
+    }
+  });
+
+  computeTimes();
+
+  <% } %>
+</script>
+
+<style>
+  .event-item.completed {
+    background: #d4edda !important;
+    border-left: 6px solid #28a745 !important;
+  }
+</style>

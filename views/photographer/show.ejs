@@ -1,0 +1,175 @@
+<% layout('layouts/boilerplate') %>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<div class="container-fluid py-5 bg-light min-vh-100">
+
+  <!-- Header -->
+  <div class="px-5 py-5 bg-dark text-white text-center">
+    <h1 class="mb-3" style="font-family:'Playfair Display',serif; font-size:3rem;">
+      <i class="fa-solid fa-camera-retro me-3 text-warning"></i>
+      <%= photographer.name %>
+    </h1>
+    <p class="opacity-75 fs-5">Capture your precious moments beautifully</p>
+  </div>
+
+  <div class="row g-0 mt-4 px-4">
+
+    <!-- Left -->
+    <div class="col-lg-8 col-md-7 p-4">
+
+      <% if (photographer.imageUrl) { %>
+      <img src="<%= photographer.imageUrl %>" class="w-100 rounded-3 shadow mb-4"
+        style="height:450px;object-fit:cover;">
+      <% } else { %>
+      <img src="https://via.placeholder.com/1200x500?text=No+Image+Available" class="w-100 rounded-3 shadow mb-4">
+      <% } %>
+
+      <p class="text-muted fs-5 mb-2">
+        <i class="fa-solid fa-video text-danger me-2"></i>
+        Service Type: <strong><%= photographer.serviceType %></strong>
+      </p>
+
+      <p class="fw-semibold text-success fs-4 mb-2">
+        ₹ <%= photographer.pricePerDay %> / Day
+      </p>
+
+      <% if (photographer.specialties && photographer.specialties.length > 0) { %>
+      <h5 class="fw-bold text-dark mt-4 mb-2">Specialties</h5>
+      <div class="d-flex flex-wrap gap-2 mb-2">
+        <% photographer.specialties.forEach(spec => { %>
+        <span class="badge bg-light text-dark border px-3 py-2 rounded-pill shadow-sm">
+          <%= spec %>
+        </span>
+        <% }) %>
+      </div>
+      <% } %>
+
+      <!-- Contact -->
+      <p class="text-muted fs-6 mt-3">
+        <i class="fa-solid fa-phone text-success me-2"></i>
+        <%= photographer.contactNumber %><br>
+        <i class="fa-solid fa-envelope text-primary me-2 mt-1"></i>
+        <%= photographer.email %>
+      </p>
+
+      <p class="small text-muted mt-3">
+        <i class="fa-solid fa-calendar-days me-1"></i>
+        Added on: <%= new Date(photographer.createdAt).toLocaleDateString() %>
+      </p>
+
+      <a href="/photographers" class="btn btn-outline-secondary px-4 mt-3">
+        <i class="fa-solid fa-arrow-left me-2"></i>Back
+      </a>
+
+
+      <!-- ⭐⭐⭐⭐⭐ RATING SECTION -->
+      <hr class="my-5">
+
+      <div id="reviews">
+        <h3 class="fw-bold mb-3">Reviews & Ratings</h3>
+
+        <!-- Average Rating -->
+        <div class="mb-3">
+          <h5>
+            ⭐ <%= avgRating %> / 5
+            <span class="text-muted fs-6">(<%= totalReviews %> reviews)</span>
+          </h5>
+        </div>
+
+        <!-- Add Rating -->
+        <form action="/photographers/<%= photographer._id %>/rate" method="POST" class="mb-4">
+
+          <div class="mb-2">
+            <label class="form-label fw-semibold">Your Name</label>
+            <input type="text" name="userName" class="form-control" required>
+          </div>
+
+          <!-- Star Selection -->
+          <div class="mb-2">
+            <label class="form-label fw-semibold">Your Rating</label>
+            <div class="star-rating">
+              <input type="hidden" name="stars" id="starsInput" value="0">
+              <span class="star" data-val="1">&#9733;</span>
+              <span class="star" data-val="2">&#9733;</span>
+              <span class="star" data-val="3">&#9733;</span>
+              <span class="star" data-val="4">&#9733;</span>
+              <span class="star" data-val="5">&#9733;</span>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Comment (optional)</label>
+            <textarea name="comment" class="form-control"></textarea>
+          </div>
+
+          <button class="btn btn-primary">Submit Review</button>
+        </form>
+
+        <!-- ⭐ Show Reviews -->
+        <div>
+          <% ratings.forEach(r => { %>
+          <div class="border p-3 mb-3 rounded-3 bg-white shadow-sm">
+            <h6 class="fw-bold mb-1"><%= r.userName %></h6>
+            <p class="mb-1 text-warning">
+              <% for(let i=1; i<=r.stars; i++) { %> ⭐ <% } %>
+            </p>
+            <p class="mb-2"><%= r.comment %></p>
+
+            <!-- Delete Review -->
+            <form action="/photographers/<%= photographer._id %>/rate/<%= r._id %>?_method=DELETE" method="POST">
+              <button class="btn btn-sm btn-danger">
+                <i class="fa-solid fa-trash"></i> Delete
+              </button>
+            </form>
+          </div>
+          <% }) %>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Right Booking -->
+    <div class="col-lg-4 col-md-5 bg-white p-5 border-start shadow-sm">
+      <div class="sticky-top" style="top:5rem;">
+        <h4 class="fw-bold mb-3 text-dark text-center">Book Photographer</h4>
+
+        <form action="/photographers/<%= photographer._id %>/book" method="POST">
+          <button class="btn btn-success w-100 mt-3">Book This Photographer</button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<style>
+.star-rating .star {
+  font-size: 2rem;
+  color: #ccc;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.star-rating .star.selected {
+  color: gold;
+}
+</style>
+
+<script>
+const stars = document.querySelectorAll(".star-rating .star");
+const inputStars = document.getElementById("starsInput");
+
+stars.forEach(star => {
+  star.addEventListener("click", function () {
+    const val = this.getAttribute("data-val");
+    inputStars.value = val;
+
+    stars.forEach(s => s.classList.remove("selected"));
+
+    for (let i = 0; i < val; i++) {
+      stars[i].classList.add("selected");
+    }
+  });
+});
+</script>

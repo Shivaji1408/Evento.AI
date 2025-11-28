@@ -1,0 +1,159 @@
+<% layout('layouts/boilerplate') %>
+
+<section class="ai-dashboard py-5">
+  <div class="container">
+
+    <!-- HEADER -->
+    <div class="text-center mb-5">
+      <h1 class="fw-bold display-4 ai-heading">
+        Evento<span class="text-gradient">.AI</span> Intelligence Center
+      </h1>
+      <p class="fs-5 ai-text-white">
+        Explore all powerful AI tools crafted to simplify and automate your event planning.
+      </p>
+    </div>
+
+    <!-- AI FEATURE GRID -->
+    <div class="row g-4 justify-content-center">
+
+      <!-- AI Invitation -->
+      <div class="col-md-6 col-lg-4">
+        <a href="/ai/invitation" class="ai-card d-block">
+          <div class="ai-icon bg-blue">
+            <i class="fa-solid fa-envelope-open-text"></i>
+          </div>
+          <h4 class="mt-3 fw-bold ai-text-white">AI Invitation Generator</h4>
+          <p class="small ai-text-white">
+            Generate beautiful, personalized invitations instantly.
+          </p>
+        </a>
+      </div>
+
+      <!-- AI Scheduler -->
+      <div class="col-md-6 col-lg-4">
+        <a href="/ai/scheduler" class="ai-card d-block">
+          <div class="ai-icon bg-purple">
+            <i class="fa-solid fa-calendar-days"></i>
+          </div>
+          <h4 class="mt-3 fw-bold ai-text-white">AI Event Scheduler</h4>
+          <p class="small ai-text-white">
+            Auto-create a perfect timeline for your event (editable).
+          </p>
+        </a>
+      </div>
+
+      <!-- AI Recommender -->
+      <div class="col-md-6 col-lg-4">
+        <a href="/ai/recommender" class="ai-card d-block">
+          <div class="ai-icon bg-green">
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+          </div>
+          <h4 class="mt-3 fw-bold ai-text-white">AI Vendor Recommender</h4>
+          <p class="small ai-text-white">
+            Find the best venue, decor, catering & photography within budget.
+          </p>
+        </a>
+      </div>
+
+      <!-- AI Chatbot -->
+      <div class="col-md-6 col-lg-4">
+        <a href="/ai/chatbot" class="ai-card d-block">
+          <div class="ai-icon bg-orange">
+            <i class="fa-solid fa-robot"></i>
+          </div>
+          <h4 class="mt-3 fw-bold ai-text-white">AI Event Assistant Chatbot</h4>
+          <p class="small ai-text-white">
+            Ask anything — event help, suggestions, budgets, planning tips.
+          </p>
+        </a>
+      </div>
+
+      <!-- Future Feature -->
+      <div class="col-md-6 col-lg-4">
+        <div class="ai-card disabled">
+          <div class="ai-icon bg-grey">
+            <i class="fa-solid fa-chart-line"></i>
+          </div>
+          <h4 class="mt-3 fw-bold ai-text-white">AI Budget Optimizer</h4>
+          <p class="small ai-text-white">
+            Coming soon — optimize budget automatically using AI.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<style>
+/* DARK AI BACKGROUND */
+.ai-dashboard {
+  background: #0d0d0f;
+  min-height: 100vh;
+  padding-bottom: 80px;
+}
+
+/* AI HEADING */
+.ai-heading {
+  color: #ffffff;
+}
+
+/* Make all text white */
+.ai-text-white {
+  color: #ffffff !important;
+}
+
+/* Gradient highlight */
+.text-gradient {
+  background: linear-gradient(90deg, #4facfe, #00f2fe);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* AI CARDS */
+.ai-card {
+  background: rgba(255, 255, 255, 0.06);
+  padding: 35px 25px;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  text-align: center;
+  color: white;
+  transition: 0.3s ease;
+}
+
+.ai-card:hover {
+  background: rgba(255, 255, 255, 0.12);
+  transform: translateY(-6px);
+  border-color: rgba(255, 255, 255, 0.25);
+  text-decoration: none;
+}
+
+/* Disabled card */
+.ai-card.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* AI ICONS */
+.ai-icon {
+  width: 85px;
+  height: 85px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: white;
+  margin: auto;
+}
+
+/* Color Themes */
+.bg-blue { background: linear-gradient(135deg, #007BFF, #00C6FF); }
+.bg-purple { background: linear-gradient(135deg, #7f00ff, #e100ff); }
+.bg-green { background: linear-gradient(135deg, #00b09b, #96c93d); }
+.bg-orange { background: linear-gradient(135deg, #ff512f, #f09819); }
+.bg-grey { background: linear-gradient(135deg, #485563, #29323c); }
+</style>

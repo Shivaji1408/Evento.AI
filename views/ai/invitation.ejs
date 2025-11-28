@@ -1,0 +1,211 @@
+<% layout('layouts/boilerplate') %>
+
+<div class="container py-5">
+  <div class="text-center mb-4">
+    <h2 class="fw-bold text-dark">AI Invitation Generator</h2>
+    <p class="text-muted">Describe your event simply — AI will craft a professional invitation in your chosen language.</p>
+  </div>
+
+  <!-- Two-column layout: INPUT (left) | OUTPUT (right) -->
+  <div class="row g-4">
+
+    <!-- LEFT: Input Form -->
+    <div class="col-lg-6">
+      <div class="card shadow-sm border-0 rounded-4">
+        <div class="card-body p-4">
+          <form id="invitationForm" action="/ai/invitation" method="POST" class="needs-validation" novalidate>
+            <!-- Event name -->
+            <div class="mb-3">
+              <label class="form-label fw-semibold text-dark">Event Name</label>
+              <input type="text" name="eventName" class="form-control form-control-lg" placeholder="e.g., Aash & Priya - Wedding" required>
+              <div class="invalid-feedback">Please enter the event name.</div>
+            </div>
+
+            <!-- Date & Time -->
+            <div class="mb-3">
+              <label class="form-label fw-semibold text-dark">Date & Time</label>
+              <input type="text" name="dateTime" class="form-control" placeholder="e.g., 12 Dec 2025, 6:00 PM" required>
+              <div class="form-text text-muted">Write date & time simply (AI will format it).</div>
+              <div class="invalid-feedback">Please enter date and time.</div>
+            </div>
+
+            <!-- Venue -->
+            <div class="mb-3">
+              <label class="form-label fw-semibold text-dark">Venue</label>
+              <input type="text" name="venue" class="form-control" placeholder="Venue name and address (optional)">
+            </div>
+
+            <!-- Host -->
+            <div class="mb-3">
+              <label class="form-label fw-semibold text-dark">Hosted By</label>
+              <input type="text" name="host" class="form-control" placeholder="e.g., The Sharma Family">
+            </div>
+
+            <!-- Short Note / Message -->
+            <div class="mb-3">
+              <label class="form-label fw-semibold text-dark">Short Note (optional)</label>
+              <textarea name="note" class="form-control" rows="3" placeholder="Any special instructions, dress code, RSVP details..."></textarea>
+            </div>
+
+            <!-- Tone & Language -->
+            <div class="row g-2">
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-semibold text-dark">Tone</label>
+                <select name="tone" class="form-select">
+                  <option value="Formal">Formal</option>
+                  <option value="Friendly">Friendly</option>
+                  <option value="Festive">Festive</option>
+                </select>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-semibold text-dark">Language</label>
+                <select name="language" class="form-select">
+                  <option value="English">English</option>
+                  <option value="Hindi">Hindi</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Submit -->
+            <div class="d-grid gap-2">
+              <button id="generateBtn" type="submit" class="btn btn-primary btn-lg fw-semibold">
+                Generate Invitation
+              </button>
+              <!-- spinner -->
+              <div id="loading" class="text-center mt-2" style="display:none;">
+                <div class="spinner-border text-primary" role="status" aria-hidden="true"></div>
+                <small class="text-muted d-block mt-2">Generating invitation, please wait...</small>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Tips -->
+      <div class="mt-3 text-muted small">
+        <strong>Tips:</strong> Keep the event name and date/time clear. Add venue and host for a complete invitation. Choose language before submitting.
+      </div>
+    </div>
+
+    <!-- RIGHT: Output -->
+    <div class="col-lg-6">
+      <div class="card shadow-sm border-0 rounded-4 h-100">
+        <div class="card-body p-4 d-flex flex-column">
+
+          <h5 class="fw-semibold text-dark mb-3">Generated Invitation</h5>
+
+          <!-- If no output yet, show placeholder -->
+          <% if (!output) { %>
+            <div class="flex-fill d-flex align-items-center justify-content-center">
+              <div class="text-center text-muted">
+                <i class="fa-solid fa-envelope-open-text fa-2x mb-3"></i>
+                <p class="mb-0">Your invitation will appear here after you submit the form.</p>
+              </div>
+            </div>
+          <% } else { %>
+
+            <!-- Invitation card -->
+            <div id="invitationResult" class="border rounded p-4 bg-light flex-fill d-flex flex-column">
+              <!-- We assume server returns a fully formatted invitation in 'output' -->
+              <div class="mb-3">
+                <!-- Provide language label -->
+                <small class="text-muted">Language: <strong><%= language || 'English' %></strong></small>
+              </div>
+
+              <!-- The AI-generated invitation text. Render as HTML-safe preformatted to preserve line breaks -->
+              <div id="invText" class="text-dark" style="white-space: pre-line;"><%= output %></div>
+
+              <!-- Actions -->
+              <div class="mt-4 d-flex gap-2">
+                <button id="copyBtn" class="btn btn-outline-primary btn-sm">Copy</button>
+                <a id="downloadBtn" class="btn btn-outline-secondary btn-sm" href="#" download="invitation.txt">Download</a>
+                <button id="sendBtn" class="btn btn-success btn-sm ms-auto">Send to Guests</button>
+              </div>
+            </div>
+
+          <% } %>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Page-specific scripts -->
+<script>
+  // Bootstrap validation
+  (function () {
+    'use strict'
+    const form = document.getElementById('invitationForm')
+    form.addEventListener('submit', function (event) {
+      if (!form.checkValidity()) {
+        event.preventDefault()
+        event.stopPropagation()
+      } else {
+        // Show loading spinner and disable button
+        document.getElementById('generateBtn').disabled = true
+        document.getElementById('loading').style.display = 'block'
+      }
+      form.classList.add('was-validated')
+    }, false)
+  })()
+
+  // Copy / Download / Send actions only when output exists
+  <% if (output) { %>
+  const copyBtn = document.getElementById('copyBtn')
+  const downloadBtn = document.getElementById('downloadBtn')
+  const sendBtn = document.getElementById('sendBtn')
+  const invTextEl = document.getElementById('invText')
+
+  copyBtn && copyBtn.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(invTextEl.innerText.trim())
+      copyBtn.innerText = 'Copied'
+      setTimeout(()=> copyBtn.innerText = 'Copy', 1500)
+    } catch (e) {
+      alert('Copy failed. You can manually select and copy the text.')
+    }
+  })
+
+  downloadBtn && downloadBtn.addEventListener('click', (e) => {
+    const text = invTextEl.innerText.trim()
+    const blob = new Blob([text], { type: 'text/plain' })
+    const url = URL.createObjectURL(blob)
+    downloadBtn.href = url
+    // browser will download because of download attribute
+  })
+
+  // Send to Guests (placeholder) - open modal or route to guest list (implement backend)
+  sendBtn && sendBtn.addEventListener('click', () => {
+    // For now, provide simple redirect placeholder
+    // You can replace this with an AJAX call to send emails/SMS via backend
+    if (confirm('This will open the Manage Guests page. Implement send-to-guests on server to actually send messages. Proceed?')) {
+      window.location.href = '/guests'
+    }
+  })
+  <% } %>
+</script>
+
+<!-- Minimal styles to keep the page professional -->
+<style>
+  /* Slightly larger input font and more airy spacing */
+  input.form-control, textarea.form-control, .form-select {
+    font-size: 0.95rem;
+  }
+
+  .card .card-body { padding: 1.4rem; }
+
+  /* Make the generated invitation look like a real invitation */
+  #invitationResult {
+    background: linear-gradient(180deg, #ffffff, #fbfbfd);
+    border: 1px solid rgba(0,0,0,0.04);
+    border-radius: 12px;
+  }
+
+  #invText { line-height: 1.55; white-space: pre-line; font-size: 0.98rem; }
+
+  /* Buttons */
+  .btn-primary, .btn-success {
+    box-shadow: 0 6px 18px rgba(13,110,253,0.08);
+  }
+</style>

@@ -1,0 +1,65 @@
+<% layout('layouts/boilerplate') %>
+
+<section class="py-5">
+  <div class="container">
+
+    <div class="card shadow-lg p-4">
+      <h2 class="fw-bold text-primary text-center mb-4">
+        <i class="fa-solid fa-credit-card me-2"></i> Book Venue
+      </h2>
+
+      <!-- Venue Summary -->
+      <div class="alert alert-info">
+        <h5 class="fw-bold"><%= service.item.name %></h5>
+        <p class="mb-0">City: <strong><%= service.item.city %></strong></p>
+        <p class="mb-0">Price: <strong>₹<%= service.item.pricePerDay %></strong></p>
+      </div>
+
+      <!-- Error Message -->
+      <% if (typeof error !== 'undefined' && error) { %>
+        <div class="alert alert-danger">
+          <%= error %>
+        </div>
+      <% } %>
+
+      <form action="/venues/<%= service.item._id %>/pay" method="POST" class="row g-3">
+
+        <div class="col-md-6">
+          <label class="form-label fw-semibold">Your Name</label>
+          <input type="text" name="buyerName" class="form-control" required>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label fw-semibold">Phone</label>
+          <input type="text" name="userPhone" class="form-control" required>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label fw-semibold">Booking Date</label>
+          <input type="date" name="eventDate" class="form-control" value="<%= prefillDate %>" required>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label fw-semibold">Number of Guests</label>
+          <input type="number" name="guests" class="form-control" required>
+        </div>
+
+        <div class="col-12">
+          <label class="form-label fw-semibold">Payment Method</label>
+          <select class="form-select" name="paymentMethod" required>
+            <option value="COD">Cash on Delivery</option>
+            <option value="Online">Online Payment</option>
+          </select>
+        </div>
+
+        <div class="col-12 text-center mt-3">
+          <button class="btn btn-primary px-5 py-2 fw-bold">
+            Confirm Booking
+          </button>
+        </div>
+
+      </form>
+    </div>
+
+  </div>
+</section>

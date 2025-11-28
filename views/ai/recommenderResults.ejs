@@ -1,0 +1,102 @@
+<% layout('layouts/boilerplate') %>
+
+<div class="container py-5">
+
+  <h2 class="fw-bold text-center mb-4">
+    Recommended Event Plans for 
+    <span class="text-primary"><%= meta.eventType %></span>
+  </h2>
+
+  <p class="text-center text-muted mb-4">
+    Based on your budget, guest count, and preferences — here are the best matched combinations.
+  </p>
+
+  <!-- Recommendation Sets -->
+  <div class="row g-4">
+
+    <% sets.forEach((set, index) => { %>
+
+      <div class="col-md-4">
+        <div class="card shadow-sm border-0 rounded-4">
+
+          <!-- Header -->
+          <div class="card-header bg-primary text-white text-center py-3">
+            <h5 class="mb-0 fw-bold">Recommendation Set <%= index + 1 %></h5>
+          </div>
+
+          <div class="card-body">
+
+            <!-- Venue -->
+            <h6 class="fw-bold">Venue</h6>
+            <% if (set.venue) { %>
+              <p><%= set.venue.name %>
+                <br><small class="text-muted">₹<%= set.venue.pricePerDay %> per day</small>
+              </p>
+            <% } else { %>
+              <p class="text-muted">No venue matched.</p>
+            <% } %>
+
+            <!-- Caterer -->
+            <h6 class="fw-bold mt-3">Caterer</h6>
+            <% if (set.caterer) { %>
+              <p><%= set.caterer.name %>
+                <br><small class="text-muted">₹<%= set.caterer.pricePerPlate %> per plate</small>
+              </p>
+            <% } else { %>
+              <p class="text-muted">No caterer matched.</p>
+            <% } %>
+
+            <!-- Decor -->
+            <h6 class="fw-bold mt-3">Decor</h6>
+            <% if (set.decor) { %>
+              <p><%= set.decor.name %>
+                <br><small class="text-muted">
+                  ₹<%= set.decor.priceRange?.max || set.decor.priceRange?.min %>
+                </small>
+              </p>
+            <% } else { %>
+              <p class="text-muted">No decor matched.</p>
+            <% } %>
+
+            <!-- Photographer -->
+            <h6 class="fw-bold mt-3">Photographer</h6>
+            <% if (set.photographer) { %>
+              <p><%= set.photographer.name %>
+                <br><small class="text-muted">₹<%= set.photographer.pricePerDay %> per day</small>
+              </p>
+            <% } else { %>
+              <p class="text-muted">No photographer matched.</p>
+            <% } %>
+
+            <!-- Select Button -->
+            <form action="/ai/recommender/summary" method="GET" class="mt-3">
+
+              <!-- IDs -->
+              <input type="hidden" name="venueId" value="<%= set.venue?._id %>">
+              <input type="hidden" name="catererId" value="<%= set.caterer?._id %>">
+              <input type="hidden" name="decorId" value="<%= set.decor?._id %>">
+              <input type="hidden" name="photographerId" value="<%= set.photographer?._id %>">
+
+              <!-- Meta -->
+              <input type="hidden" name="eventName" value="<%= meta.eventType %>">
+              <input type="hidden" name="eventDate" value="<%= meta.date %>">
+              <input type="hidden" name="city" value="<%= meta.city %>">
+              <input type="hidden" name="guests" value="<%= meta.guests %>">
+              <input type="hidden" name="budget" value="<%= meta.budget %>">
+
+              <button class="btn btn-success w-100 mt-2 fw-semibold">
+                View Summary
+              </button>
+
+            </form>
+
+          </div>
+
+        </div>
+      </div>
+
+    <% }) %>
+
+  </div>
+
+</div>
