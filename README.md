@@ -2,7 +2,7 @@
 
 ## This is the live project link
 
-This is the live project link: https://your-live-link.example (replace with the actual URL)
+This is the live project link: https://evento-ai.onrender.com/
 
 ---
 
