@@ -33,6 +33,8 @@ const recommenderRoutes = require('./Routes/recommender');
 const aiChatRoutes = require('./Routes/aiChat');
 const aiIndexRoutes = require('./Routes/aiIndex');
 
+
+
 const caterSeed = require('./Seed/caterSeed');
 const decorSeed = require('./Seed/decorSeed');
 const guests = require('./Seed/guests');
@@ -44,7 +46,6 @@ const venueSeed = require('./Seed/venueSeed');
 // guests();
 // photographerSeed();
 // venueSeed();
-
 
 // =========================
 // VIEW ENGINE & STATIC FILES
@@ -91,7 +92,7 @@ app.use((req, res, next) => {
 // =========================
 // DATABASE CONNECTION
 // =========================
-mongoose.connect(process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/evento2")
+mongoose.connect(process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/evento")
   .then(() => console.log("MongoDB Connected Successfully"))
   .catch((err) => {
     console.error("DB Connection Error:", err);

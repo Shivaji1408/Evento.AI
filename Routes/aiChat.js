@@ -6,7 +6,7 @@ const rateLimit = require("express-rate-limit");
 
 // --- OpenAI client
 const client = new OpenAI({
-  apiKey:process.env.OPENAI_API_KEY
+  apiKey: process.env.OPENAI_API_KEY
 });
 
 // --- rate limiter: 20 requests per minute per IP
