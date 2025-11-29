@@ -1,13 +1,14 @@
-const express = require('express')
-const router = express.Router()
+const express = require('express');
+const router = express.Router();
 
-router.get('/home',async(req,res)=>{
-    try{
-        res.render('home/index',{user:null});
-    }
-    catch(e){
-        res.status(500).render('error',{err:e.message});
-    }
-})
+// Homepage route for Render and normal browser
+router.get('/', (req, res) => {
+    res.render('home/index', { user: null });
+});
+
+// Old route (optional)
+router.get('/home', (req, res) => {
+    res.render('home/index', { user: null });
+});
 
 module.exports = router;
